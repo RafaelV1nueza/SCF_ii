@@ -1,0 +1,60 @@
+States
+0 - no goal/Idle
+1 - editing goals
+2 - moving to goal
+3 - reached goal
+
+
+Instruction syntaxis
+
+01-----------------
+Prompt:
+"Opciones a realizar:
+[0] o [D] Definir puntos
+[1] o [M] Moverse a un punto
+[2] o [P] Parar el Robot"
+
+#
+Response:
+0,1,2,D,M,P,d,m,p = []
+#
+Instruction:
+"op+[]"
+#
+
+02-----------------
+Prompt:
+"Elegir punto a moverse:
+*puntos*
+"
+#
+Response:
+*nombre del punto*
+#
+Instruction:
+2_nombredelpunto
+
+#
+
+03-----------------
+Prompt:
+
+#
+Response:
+
+#
+Instruction:
+
+#
+
+05-----------------
+Prompt:
+
+#
+Response:
+
+#
+Instruction:
+
+#
+
