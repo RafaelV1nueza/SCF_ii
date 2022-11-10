@@ -5,7 +5,8 @@
         <arg name="map_file" default="$(find scf_reto)/maps_tb/rafa_house_map.yaml"/>
     </include>
 
-    <node pkg="scf_reto" name="reto_rob_mov" type="reto_rob_mov.py"/>
+    <node pkg="scf_reto" name="turtlebot_brain" type="turtlebot_brain.py"/>
+    
     <node pkg="scf_reto" name="telegram_broker" type="telegram_broker.py"/>
     <node pkg="scf_reto" name="node_red_run" type="node_red_run.py"/>
 </launch>
