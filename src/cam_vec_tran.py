@@ -17,8 +17,10 @@ class CamInfoClass():
         #********** INIT NODE **********### 
         r = rospy.Rate(2) #1Hz 
         print("Node initialized 2hz")
+        while not rospy.is_shutdown(): 
 
-        
+            r.sleep()  #It is very important that the r.sleep function is called at least once every cycle. 
+
     def cam_vector(self,tag_vector):
         self.tag = tag_vector.pose
 
