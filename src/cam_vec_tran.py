@@ -2,6 +2,7 @@
 
 import rospy
 from geometry_msgs.msg import Pose
+from geometry_msgs.msg import PoseStamped
 from tf.transformations import quaternion_matrix
 from tf.transformations import quaternion_from_matrix
 import numpy as np 
@@ -12,7 +13,7 @@ class CamInfoClass():
         rospy.on_shutdown(self.cleanup) 
 
         self.pub_state = rospy.Publisher('vectorPose_UR', Pose, queue_size=1)
-        rospy.Subscriber("visp_auto_tracker/object_position", Pose, self.cam_vector)
+        rospy.Subscriber("visp_auto_tracker/object_position", PoseStamped, self.cam_vector)
 
         self.tag = Pose()
         self.image_flag  = 0
