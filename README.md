@@ -9,13 +9,3 @@ S.T.E.V.E developed for SCF
 -------------------------------------
 
 10/11/2022
-
-ack -josh
-
-nope -Vale
-
-ack -vinu
-
-siuu -kay
-
-123 -josh
