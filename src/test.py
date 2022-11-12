@@ -1,8 +1,13 @@
 #!/usr/bin/env python 
 import rospy
 
-
-
+class TestClass():
+    def __init__(self): 
+        rospy.on_shutdown(self.cleanup) 
+        r = rospy.Rate(2) #1Hz 
+        print("Node initialized 2hz")
+        while not rospy.is_shutdown(): 
+            print('Rotation tf')
 
 if __name__ == "__main__": 
     print("Hihi")
