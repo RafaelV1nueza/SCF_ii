@@ -1,7 +1,22 @@
 #!/usr/bin/env python 
-from os import wait
-import os
-import time
+import rospy
+
+
+
+
+if __name__ == "__main__": 
+    print("Hihi")
+    rospy.init_node("test_node", anonymous=True) 
+    TestClass()
+
+
+
+
+
+#!/usr/bin/env python 
+#from os import wait
+#import os
+#import time
 
 
 
