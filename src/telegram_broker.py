@@ -1,4 +1,30 @@
 #!/usr/bin/env python 
+
+#########################################################################
+#   _________  ___________ ___________ ____   ____ ___________          #
+#  /   _____/  \__    ___/ \_   _____/ \   \ /   / \_   _____/          #
+#  \_____  \     |    |     |    __)_   \   Y   /   |    __)_           #
+#  /        \    |    |     |        \   \     /    |        \          #
+# /_______  / /\ |____| /\ /_______  / /\ \___/ /\ /_______  / /\       #
+#         \/  \/        \/         \/  \/       \/         \/  \/       #
+#                                                                       #
+#########################################################################
+#                                                                       #
+# File Name: telegram_broker.py                                         #
+#                                                                       #
+# Maintainer:vinu                                                       #
+#                                                                       #
+# Version: v1.0.2 (alpha)                                               #
+#                                                                       #
+# Notes: Version with functional telegram messaging, publish menu messa-#
+#        ges & recieve instructions from telegram. Added ubidots pub and#
+#        some bug to fix later                                          #
+#                                                                       #
+# Latest edit: vinu                                                     #
+#                                                                       #
+# Date: 13.11.2022                                                      #
+#########################################################################
+
 from os import wait
 import rospy 
 import time
@@ -32,7 +58,7 @@ class TelegramComm():
         time.sleep(3)
         #While loop
         while not rospy.is_shutdown():
-            print("""--Telegram Broker v1.0.1--
+            print("""--Telegram Broker v1.0.2--
             Developed by S.T.E.V.E for SCF
     Running...
     Publishing to /pub_Telegram & /inst_tb
@@ -77,6 +103,10 @@ class TelegramComm():
 [Nombre]:[X-coord],[Y-coord],[Angulo]""")
 
                         sent_menu2 = 1          #Sent menu2 flag
+                        time.sleep(1)
+                        print('ubidots publish')
+                        self.pub_ubid.publish('D'+lines)
+                        print('ubidots publish f')
 
                     ans = self.tlgrm_msg        #Save msg as ans
                     if ans.count(',')==2 and ans.count(':') == 1:   #Validate ans format
@@ -134,7 +164,7 @@ class TelegramComm():
                         self.pub_tele.publish('\U0001F7E9 MENU PRINCIPAL \U0001F7E9 ')
                         time.sleep(1)
                         print('Idle Message')
-                        self.pub_ubid.publish("Menu")
+                        self.pub_ubid.publish("menu01")
                         time.sleep(1)
                         self.pub_tele.publish("""Opciones a realizar:
 [0] o [D] Definir puntos \u26F3\uFE0F
