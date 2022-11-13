@@ -11,6 +11,7 @@ S.T.E.V.E developed for SCF
 11/11/2022
 
 TO DO:                      |Responsable:       |Progreso:      |
+____________________________|___________________|_______________|
 Test functions              |vinu               |0%             |
 UR movimientos              |josh               |#10%           |
 Camara Implementations      |valeria            |###30%         |
