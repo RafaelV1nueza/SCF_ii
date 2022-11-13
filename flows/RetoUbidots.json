@@ -1,0 +1,394 @@
+[
+    {
+        "id": "bbe72e32db569ce6",
+        "type": "tab",
+        "label": "RetoUbidots",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "47a35d5f06b41d62",
+        "type": "function",
+        "z": "bbe72e32db569ce6",
+        "name": "RcvTxt_fcn",
+        "func": "var user_input = {}\nvar a = msg.payload[\"retosteve/userinput\"].context.txtUI\nuser_input.payload = {\"data\":  a}\n//node.log(msg.payload);\nreturn user_input;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 240,
+        "wires": [
+            [
+                "19025db753f66420",
+                "0b0d4178b15ad1fc"
+            ]
+        ]
+    },
+    {
+        "id": "d3091b5e402c5a3f",
+        "type": "ubidots_in",
+        "z": "bbe72e32db569ce6",
+        "tier": "educational",
+        "name": "usrInput",
+        "token": "BBFF-OAOGGUeIkxWZil1kkbjj05A1rlLDhF",
+        "device_label": "nodemcu_rafa",
+        "tls_checkbox_in": true,
+        "custom_topic_checkbox": true,
+        "label_variable_1": "retosteve/userinput",
+        "label_variable_2": "",
+        "label_variable_3": "",
+        "label_variable_4": "",
+        "label_variable_5": "",
+        "label_variable_6": "",
+        "label_variable_7": "",
+        "label_variable_8": "",
+        "label_variable_9": "",
+        "label_variable_10": "",
+        "checkbox_variable_1_last_value": true,
+        "checkbox_variable_2_last_value": true,
+        "checkbox_variable_3_last_value": true,
+        "checkbox_variable_4_last_value": true,
+        "checkbox_variable_5_last_value": true,
+        "checkbox_variable_6_last_value": true,
+        "checkbox_variable_7_last_value": true,
+        "checkbox_variable_8_last_value": true,
+        "checkbox_variable_9_last_value": true,
+        "checkbox_variable_10_last_value": true,
+        "x": 140,
+        "y": 240,
+        "wires": [
+            [
+                "47a35d5f06b41d62"
+            ]
+        ]
+    },
+    {
+        "id": "6117330f9319440b",
+        "type": "ros-subscriber",
+        "z": "bbe72e32db569ce6",
+        "topicname": "/ubidots",
+        "typepackage": "std_msgs",
+        "typename": "String",
+        "x": 110,
+        "y": 80,
+        "wires": [
+            [
+                "33d9d6ba7a43ca90"
+            ]
+        ]
+    },
+    {
+        "id": "33d9d6ba7a43ca90",
+        "type": "function",
+        "z": "bbe72e32db569ce6",
+        "name": "MenuSelector",
+        "func": "var brkrmsg = msg.payload.data;\nvar menuDisp = {}\n/* Main Menu */\nif (brkrmsg == 'menu01'){\n    menuDisp.payload = {\n        \"menu01\": {\n            \"value\": 1,\n            \"context\": {\n                \"key01\": \"MENU\",\n                \"key02\": \"Opciones a realizar:\",\n                \"key03\": \"[0] o [D] Definir puntos\",\n                \"key04\": \"[1] o [M] Moverse a un punto \",\n                \"key05\": \"[2] o [P] Parar el Robot\",\n                \"key06\": \"Coming soon...\",\n                \"key07\": \"Coming soon...\",\n                \"key08\": \"Coming soon...\",\n            }\n        }\n    }\n}\nelse if (brkrmsg.slice(0,1) == 'D'){\n    const elem = brkrmsg.match(/\\n/g).length;\n    let pos = brkrmsg.slice(1);\n    let arr = []\n    arr[10] = 'empty'\n    var a = 0\n    for (let i = 0; i < elem; i++) {\n        var b = pos.indexOf(\"\\n\", a)\n        arr[i] = pos.slice(a, b)\n        a = b + 1\n    }\n    menuDisp.payload = {\n        \"menu01\": {\n            \"value\": 2,\n            \"context\": {\n                \"key01\": \"Definir Puntos\",\n                \"key02\": \"Las \"+String(elem)+\"/10 posiciones guardads son:\",\n                \"key03\": arr[0],\n                \"key04\": arr[1],\n                \"key05\": arr[2],\n                \"key06\": arr[3],\n                \"key07\": arr[4],\n                \"key08\": arr[5],\n                \"key09\": arr[6],\n                \"key10\": arr[7],\n                \"key11\": arr[8],\n                \"key12\": arr[9],\n                \"key13\": \"Escribir una posicion en el formato:\",\n                \"key14\": \"[Nombre]:[X-coord],[Y-coord],[Angulo]\"\n\n            }\n        }\n    }\n}\nelse if (brkrmsg.slice(0, 1) == 'M') {\n    const elem = brkrmsg.match(/\\n/g).length;\n    let pos = brkrmsg.slice(1);\n    let arr = []\n    arr[10] = 'empty'\n    var a =0\n    for (let i=0;i<elem;i++){\n        var b = pos.indexOf(\"\\n\",a)\n        arr[i]=pos.slice(a,b)\n        a=b+1\n    }\n    \n    menuDisp.payload = {\n        \"menu01\": {\n            \"value\": 3,\n            \"context\": {\n                \"key01\": \"Moverse\",\n                \"key02\": \"Las posiciones guardadas son:\",\n                \"key03\": arr[0],\n                \"key04\": arr[1],\n                \"key05\": arr[2],\n                \"key06\": arr[3],\n                \"key07\": arr[4],\n                \"key08\": arr[5],\n                \"key09\": arr[6],\n                \"key10\": arr[7],\n                \"key11\": arr[8],\n                \"key12\": arr[9],\n                \"key13\": \"Escribir en el recuadro el nombre de la posicion\",\n                \"key14\": String(elem)+\"/10 poses\",\n            }\n        }\n    }\n\n}\nelse{\n    menuDisp.payload = {\n        \"menu01\": {\n            \"value\": 0,\n            \"context\": {\n                \"key01\": \"Error Inesperado\",\n                }\n            }\n        }\n}\n\nreturn menuDisp;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 80,
+        "wires": [
+            [
+                "78c79bbdc96636a6",
+                "9326f35a931b5163"
+            ]
+        ]
+    },
+    {
+        "id": "78c79bbdc96636a6",
+        "type": "debug",
+        "z": "bbe72e32db569ce6",
+        "name": "UbidotsfromROS",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 570,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "9326f35a931b5163",
+        "type": "ubidots_out",
+        "z": "bbe72e32db569ce6",
+        "name": "retoSTEVE",
+        "token": "BBFF-OAOGGUeIkxWZil1kkbjj05A1rlLDhF",
+        "label_device": "",
+        "device_label": "retosteve",
+        "tier": "business",
+        "tls_checkbox": true,
+        "x": 550,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "19025db753f66420",
+        "type": "ros-publisher",
+        "z": "bbe72e32db569ce6",
+        "topicname": "/sub_Telegram",
+        "typepackage": "std_msgs",
+        "typename": "String",
+        "x": 800,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "c4f2ab76942ca8ea",
+        "type": "ubidots_in",
+        "z": "bbe72e32db569ce6",
+        "tier": "educational",
+        "name": "selec02",
+        "token": "BBFF-OAOGGUeIkxWZil1kkbjj05A1rlLDhF",
+        "device_label": "retosteve",
+        "tls_checkbox_in": true,
+        "custom_topic_checkbox": false,
+        "label_variable_1": "selec02",
+        "label_variable_2": "",
+        "label_variable_3": "",
+        "label_variable_4": "",
+        "label_variable_5": "",
+        "label_variable_6": "",
+        "label_variable_7": "",
+        "label_variable_8": "",
+        "label_variable_9": "",
+        "label_variable_10": "",
+        "checkbox_variable_1_last_value": true,
+        "checkbox_variable_2_last_value": true,
+        "checkbox_variable_3_last_value": true,
+        "checkbox_variable_4_last_value": true,
+        "checkbox_variable_5_last_value": true,
+        "checkbox_variable_6_last_value": true,
+        "checkbox_variable_7_last_value": true,
+        "checkbox_variable_8_last_value": true,
+        "checkbox_variable_9_last_value": true,
+        "checkbox_variable_10_last_value": true,
+        "x": 130,
+        "y": 420,
+        "wires": [
+            [
+                "d03085d913860a9c"
+            ]
+        ]
+    },
+    {
+        "id": "0b0d4178b15ad1fc",
+        "type": "debug",
+        "z": "bbe72e32db569ce6",
+        "name": "PubROSUbi",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 710,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "d03085d913860a9c",
+        "type": "function",
+        "z": "bbe72e32db569ce6",
+        "name": "RcvSelec2",
+        "func": "var instStr = {}\nif (msg.payload.selec02.value == 1){\n    instStr.payload = {\"data\":\"1\"}\n    return instStr;\n}\nelse{\n    return\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 440,
+        "wires": [
+            [
+                "19025db753f66420",
+                "0b0d4178b15ad1fc"
+            ]
+        ]
+    },
+    {
+        "id": "d18f5e6219625bad",
+        "type": "ubidots_in",
+        "z": "bbe72e32db569ce6",
+        "tier": "educational",
+        "name": "selec01",
+        "token": "BBFF-OAOGGUeIkxWZil1kkbjj05A1rlLDhF",
+        "device_label": "retosteve",
+        "tls_checkbox_in": true,
+        "custom_topic_checkbox": false,
+        "label_variable_1": "selec01",
+        "label_variable_2": "",
+        "label_variable_3": "",
+        "label_variable_4": "",
+        "label_variable_5": "",
+        "label_variable_6": "",
+        "label_variable_7": "",
+        "label_variable_8": "",
+        "label_variable_9": "",
+        "label_variable_10": "",
+        "checkbox_variable_1_last_value": true,
+        "checkbox_variable_2_last_value": true,
+        "checkbox_variable_3_last_value": true,
+        "checkbox_variable_4_last_value": true,
+        "checkbox_variable_5_last_value": true,
+        "checkbox_variable_6_last_value": true,
+        "checkbox_variable_7_last_value": true,
+        "checkbox_variable_8_last_value": true,
+        "checkbox_variable_9_last_value": true,
+        "checkbox_variable_10_last_value": true,
+        "x": 130,
+        "y": 340,
+        "wires": [
+            [
+                "63b152dbcf66d8e5"
+            ]
+        ]
+    },
+    {
+        "id": "63b152dbcf66d8e5",
+        "type": "function",
+        "z": "bbe72e32db569ce6",
+        "name": "RcvSelec1",
+        "func": "var instStr = {}\nif (msg.payload.selec01.value == 1){\n    instStr.payload = {\"data\":\"0\"}\n    return instStr;\n}\nelse{\n    return\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 360,
+        "wires": [
+            [
+                "19025db753f66420",
+                "0b0d4178b15ad1fc"
+            ]
+        ]
+    },
+    {
+        "id": "07255a45572872ee",
+        "type": "ubidots_in",
+        "z": "bbe72e32db569ce6",
+        "tier": "educational",
+        "name": "selec04",
+        "token": "BBFF-OAOGGUeIkxWZil1kkbjj05A1rlLDhF",
+        "device_label": "retosteve",
+        "tls_checkbox_in": true,
+        "custom_topic_checkbox": false,
+        "label_variable_1": "selec04",
+        "label_variable_2": "",
+        "label_variable_3": "",
+        "label_variable_4": "",
+        "label_variable_5": "",
+        "label_variable_6": "",
+        "label_variable_7": "",
+        "label_variable_8": "",
+        "label_variable_9": "",
+        "label_variable_10": "",
+        "checkbox_variable_1_last_value": true,
+        "checkbox_variable_2_last_value": true,
+        "checkbox_variable_3_last_value": true,
+        "checkbox_variable_4_last_value": true,
+        "checkbox_variable_5_last_value": true,
+        "checkbox_variable_6_last_value": true,
+        "checkbox_variable_7_last_value": true,
+        "checkbox_variable_8_last_value": true,
+        "checkbox_variable_9_last_value": true,
+        "checkbox_variable_10_last_value": true,
+        "x": 130,
+        "y": 580,
+        "wires": [
+            [
+                "5cba954893597e55"
+            ]
+        ]
+    },
+    {
+        "id": "5cba954893597e55",
+        "type": "function",
+        "z": "bbe72e32db569ce6",
+        "name": "RcvSelec4",
+        "func": "var instStr = {}\nif (msg.payload.selec04.value == 1){\n    instStr.payload = {\"data\":\"Menu\"}\n    return instStr;\n}\nelse{\n    return\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 600,
+        "wires": [
+            [
+                "19025db753f66420",
+                "0b0d4178b15ad1fc"
+            ]
+        ]
+    },
+    {
+        "id": "d1fd6872be30a00a",
+        "type": "ubidots_in",
+        "z": "bbe72e32db569ce6",
+        "tier": "educational",
+        "name": "selec03",
+        "token": "BBFF-OAOGGUeIkxWZil1kkbjj05A1rlLDhF",
+        "device_label": "retosteve",
+        "tls_checkbox_in": true,
+        "custom_topic_checkbox": false,
+        "label_variable_1": "selec03",
+        "label_variable_2": "",
+        "label_variable_3": "",
+        "label_variable_4": "",
+        "label_variable_5": "",
+        "label_variable_6": "",
+        "label_variable_7": "",
+        "label_variable_8": "",
+        "label_variable_9": "",
+        "label_variable_10": "",
+        "checkbox_variable_1_last_value": true,
+        "checkbox_variable_2_last_value": true,
+        "checkbox_variable_3_last_value": true,
+        "checkbox_variable_4_last_value": true,
+        "checkbox_variable_5_last_value": true,
+        "checkbox_variable_6_last_value": true,
+        "checkbox_variable_7_last_value": true,
+        "checkbox_variable_8_last_value": true,
+        "checkbox_variable_9_last_value": true,
+        "checkbox_variable_10_last_value": true,
+        "x": 130,
+        "y": 500,
+        "wires": [
+            [
+                "14cbc7c550ece589"
+            ]
+        ]
+    },
+    {
+        "id": "14cbc7c550ece589",
+        "type": "function",
+        "z": "bbe72e32db569ce6",
+        "name": "RcvSelec3",
+        "func": "var instStr = {}\nif (msg.payload.selec03.value == 1){\n    instStr.payload = {\"data\":\"P\"}\n    return instStr;\n}\nelse{\n    return\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 520,
+        "wires": [
+            [
+                "19025db753f66420",
+                "0b0d4178b15ad1fc"
+            ]
+        ]
+    }
+]
