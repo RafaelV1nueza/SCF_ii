@@ -61,7 +61,7 @@ class TelegramComm():
             print("""--Telegram Broker v1.0.2--
             Developed by S.T.E.V.E for SCF
     Running...
-    Publishing to /pub_Telegram & /inst_tb
+    Publishing to /pub_Telegram & /inst_tb & /ubidots
     subscribed to /state_tb & /sub_Telegram
     """)
             #self.pub_tele.publish("Robot not conected")
