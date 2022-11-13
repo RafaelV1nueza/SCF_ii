@@ -83,6 +83,8 @@ class TelegramComm():
                     elif op in ['1','M','m']:       #If inst in list
                         menu1 = 1                   #Save inst
                         resp_1 = 1                  #First answer flag
+                    else:
+                        menu1 = 10                   #If selection invalid reset menu1
                     self.tlgrm_msg = ''             #Empty telegram msg
 
                 if menu1 == 0:                      #Use op instruction
@@ -138,6 +140,8 @@ class TelegramComm():
                         print('processing...')
                         time.sleep(1)
                         self.pub_tele.publish(lines)
+                        time.sleep(1)
+                        self.pub_ubid.publish('M'+lines)
                         self.tlgrm_msg = ''     #Clear telegram Message
                         sent_menu2 = 1          #Sent menu1 flag raised
                     ans = self.tlgrm_msg        #Save msg as ans
