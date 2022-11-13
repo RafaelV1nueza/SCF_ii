@@ -10,7 +10,8 @@ S.T.E.V.E developed for SCF
 
 11/11/2022
 
-TO DO:                      |Responsable:           |
-Test functions              |vinu                   |
-Camara Implementations      |valeria                |
-UR movimientos              |josh                   |
+TO DO:                      |Responsable:       |Progreso:      |
+Test functions              |vinu               |0%             |
+UR movimientos              |josh               |#10%           |
+Camara Implementations      |valeria            |###30%         |
+Base de datos               |kay                |unk            |
