@@ -9,7 +9,7 @@
  Valeria Anhair Mino Garcia - **valeria**
  
  Kayro Adrian Aguilar - **kay**
- 
+
 -------------------------------------
 
 13/11/2022
@@ -21,3 +21,13 @@ UR movimientos              |josh               |#10%           |
 Camara Implementations      |valeria            |###30%         |
 Base de datos               |kay                |unk            |
 
+### Color Pallete
+--black-coral: #696d7dff;
+
+--wintergreen-dream: #6f9283ff;
+
+--artichoke: #8d9f87ff;
+
+--sage: #cdc6a5ff;
+
+--seashell: #fbf4efff;
