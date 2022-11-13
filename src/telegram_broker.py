@@ -45,7 +45,7 @@ class TelegramComm():
     """)
             #self.pub_tele.publish("Robot not conected")
             #Resend Menu
-            if self.tlgrm_msg == 'Menu' or self.tlgrm_msg == 'menu':
+            if self.tlgrm_msg == 'Menu' or self.tlgrm_msg == 'menu': #Maybe use the array thing 
                 sent_menu1 = 0
                 sent_menu2 = 0
                 self.msg_flag = 0
