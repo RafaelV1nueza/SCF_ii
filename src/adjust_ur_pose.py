@@ -36,7 +36,7 @@ class AdjustPoseClass():
         rospy.on_shutdown(self.cleanup) 
         rospy.Subscriber("vector_UR", Pose, self.vector_ur_cb)
         rospy.Subscriber("pose_UR", Pose, self.pose_ur_cb)
-
+        
         self.pose_flag = 0
         self.vector_flag  = 0
 
@@ -47,12 +47,22 @@ class AdjustPoseClass():
             print('While loop')
             if self.vector_flag and self.pose_flag:
                 print("Sup")
-
+                print("Actual Pose")
+                print(self.robot_pose)
+                poses = self.calc_new_pose(self.robot_pose,self.image_info)
+                print()
                 
             else:
                 print("Either pose or rot not recieved")
-                
+
             r.sleep()  #It is very important that the r.sleep function is called at least once every cycle. 
+
+    def calc_new_pose(self,ur_pose,img_info):
+        """"Dessc"""
+        
+        new_pose = [(ur_pose.position.x-img_info.position.x), (ur_pose.position.y-img_info.position.z+0.2), (ur_pose.position.z-img_info.position.y)]
+
+        return new_pose
 
     def vector_ur_cb(self,rot_pose):
         """Desc"""
