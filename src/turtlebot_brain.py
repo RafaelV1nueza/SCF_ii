@@ -1,4 +1,30 @@
 #!/usr/bin/env python 
+
+#########################################################################
+#   _________  ___________ ___________ ____   ____ ___________          #
+#  /   _____/  \__    ___/ \_   _____/ \   \ /   / \_   _____/          #
+#  \_____  \     |    |     |    __)_   \   Y   /   |    __)_           #
+#  /        \    |    |     |        \   \     /    |        \          #
+# /_______  / /\ |____| /\ /_______  / /\ \___/ /\ /_______  / /\       #
+#         \/  \/        \/         \/  \/       \/         \/  \/       #
+#                                                                       #
+#########################################################################
+#                                                                       #
+# File Name: turtlebot_brain.py                                         #
+#                                                                       #
+# Maintainer: vinu                                                      #
+#                                                                       #
+# Version: v1.0.1 (alpha)                                               #
+#                                                                       #
+# Notes: Turtlebot goal sender ROS node, uses defined goals contained in#
+#       goals.txt inside maps_tb dir. Recieves instr form ROS node. Can #
+#       cancel goals.                                                   #
+#                                                                       #
+# Latest edit: vinu                                                     #
+#                                                                       #
+# Date: 13.11.2022                                                      #
+#########################################################################
+
 from os import wait
 import rospy 
 # Bring in the SimpleActionClient
