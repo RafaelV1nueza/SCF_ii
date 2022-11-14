@@ -36,7 +36,7 @@ class CamInfoClass():
     def __init__(self): 
         rospy.on_shutdown(self.cleanup) 
 
-        self.pub_quat = rospy.Publisher('vectorPose_UR', Pose, queue_size=1)
+        self.pub_quat = rospy.Publisher('vector_UR', Pose, queue_size=1)
         rospy.Subscriber("visp_auto_tracker/object_position", PoseStamped, self.cam_vector)
 
         self.tag = Pose()
