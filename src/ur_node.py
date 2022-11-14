@@ -30,7 +30,9 @@ import rospy
 from tf2_msgs.msg import TFMessage
 
 class TestClass():
-    def __init__(self): 
+    """This class will publish the translation values from UR robot to use with camera node"""
+    def __init__(self):
+        """Init""" 
         #rospy.on_shutdown(self.cleanup) 
         r = rospy.Rate(2) #1Hz
             #-----------------------SUBSCRIBERS---------------------
@@ -42,7 +44,7 @@ class TestClass():
             r.sleep()
         
     def pos_robot_cb(self, vector_robot):
-        #vector_robot = TFMessage()
+        """Returns a translation values from UR Robot"""
         self.pose_x = vector_robot.transforms[0].transform.translation.x
         print("Pose x: ", self.pose_x)
         self.pose_y = vector_robot.transforms[0].transform.translation.y
