@@ -83,7 +83,7 @@ class TrajectoryClient:
     """Small trajectory client to test a joint trajectory"""
 
     def __init__(self):
-        rospy.init_node("test_move")
+        
 
         timeout = rospy.Duration(5)
         self.switch_srv = rospy.ServiceProxy(
@@ -286,6 +286,9 @@ class TrajectoryClient:
 
 
 if __name__ == "__main__":
+    
+    
+    rospy.init_node("test_move", anonymous=True)
     client = TrajectoryClient()
 
     # The controller choice is obviously not required to move the robot. It is a part of this demo
