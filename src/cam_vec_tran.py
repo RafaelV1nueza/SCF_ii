@@ -1,5 +1,30 @@
 #!/usr/bin/env python 
 
+#########################################################################
+#   _________  ___________ ___________ ____   ____ ___________          #
+#  /   _____/  \__    ___/ \_   _____/ \   \ /   / \_   _____/          #
+#  \_____  \     |    |     |    __)_   \   Y   /   |    __)_           #
+#  /        \    |    |     |        \   \     /    |        \          #
+# /_______  / /\ |____| /\ /_______  / /\ \___/ /\ /_______  / /\       #
+#         \/  \/        \/         \/  \/       \/         \/  \/       #
+#                                                                       #
+#########################################################################
+#                                                                       #
+# File Name: cam_vec_tran.py                                            #
+#                                                                       #
+# Maintainer:vinu,valeria                                               #
+#                                                                       #
+# Version: v1.0.1 (alpha)                                               #
+#                                                                       #
+# Notes: Recieves a quaternion from a topic and inverts x and z axes,   #
+#        Efective 180 degree rotation y axis from orientation ref.      #
+#                                                                       #
+#                                                                       #
+# Latest edit: vinu                                                     #
+#                                                                       #
+# Date: 13.11.2022                                                      #
+#########################################################################
+
 import rospy
 from geometry_msgs.msg import Pose
 from geometry_msgs.msg import PoseStamped
