@@ -11,11 +11,11 @@
 #########################################################################
 #                                                                       #
 # Test for: cam_vec_tran.py                                             #
-#                                                                       #                                                   #
+#                                                                       #
 # Version: v1.0.1 (alpha)                                               #
 #                                                                       #
-# Notes:                                                                #
-#                                                                       #
+# Notes: Test for transformation from quaternion to pose & test for     #
+#        transformation fron pose to quaternion vector                  #
 #                                                                       #
 # Latest edit: vinu                                                     #
 #                                                                       #
@@ -34,6 +34,10 @@ class QuaternionTestCase(unittest.TestCase):
         pose_def = Pose()
         pose_def.orientation.w = 1.0
         self.assertEqual(pose_from_q,pose_def)
+        pose_from_q = CamInfoClass.from_quat2pose(self,[-1, 0, 0, 0])
+        pose_def = Pose()
+        pose_def.orientation.x = -1.0
+        self.assertEqual(pose_from_q,pose_def)
 
     def test_Pose2Quat(self):
         # Pose msg a cuaternion como vector
@@ -41,6 +45,10 @@ class QuaternionTestCase(unittest.TestCase):
         pose_def.orientation.w = 1.0
         pose_from_q = CamInfoClass.from_pose2quat(self,pose_def)
         self.assertEqual(pose_from_q,[0, 0, 0, 1])
+        pose_def = Pose()
+        pose_def.orientation.y = -1.0
+        pose_from_q = CamInfoClass.from_pose2quat(self,pose_def)
+        self.assertEqual(pose_from_q,[0, -1, 0, 0])
 
 if __name__ == '__main__':
     unittest.main()
