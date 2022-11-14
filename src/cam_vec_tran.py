@@ -3,8 +3,7 @@
 import rospy
 from geometry_msgs.msg import Pose
 from geometry_msgs.msg import PoseStamped
-from tf.transformations import quaternion_matrix
-from tf.transformations import quaternion_from_matrix
+from tf.transformations import quaternion_multiply
 import numpy as np 
 
 class CamInfoClass():
@@ -12,7 +11,7 @@ class CamInfoClass():
     def __init__(self): 
         rospy.on_shutdown(self.cleanup) 
 
-        self.pub_state = rospy.Publisher('vectorPose_UR', Pose, queue_size=1)
+        self.pub_quat = rospy.Publisher('vectorPose_UR', Pose, queue_size=1)
         rospy.Subscriber("visp_auto_tracker/object_position", PoseStamped, self.cam_vector)
 
         self.tag = Pose()
@@ -29,12 +28,18 @@ class CamInfoClass():
                 z = self.tag.orientation.z
                 w = self.tag.orientation.w
                 quat = [x,y,z,w]
-                matrix = quaternion_matrix(quat)
-                r = [[-1, 0, 0],[0, 1, 0],[0, 0, -1]]
-                print(matrix)
-                tf_mat = np.matmul(matrix,r)
-                print(tf_mat)
-
+                print("Quat")
+                print(quat)
+                print("nega quaternion")
+                f = quaternion_multiply(quat,[0, 1, 0, 0])
+                inverted = Pose()
+                inverted.orientation.x = f[0]
+                inverted.orientation.y = f[1]
+                inverted.orientation.z = f[2]
+                inverted.orientation.w = f[3]
+                print(inverted)
+                
+                self.pub_quat.publish(inverted)
             r.sleep()  #It is very important that the r.sleep function is called at least once every cycle. 
 
     def cam_vector(self,tag_vector):
