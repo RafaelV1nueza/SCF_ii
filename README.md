@@ -19,7 +19,7 @@ ____________________________|___________________|_______________|
 Test functions              |vinu               |####40%        |
 UR movimientos              |josh               |#10%           |
 Camara Implementations      |valeria            |###30%         |
-Base de datos               |kay                |unk            |
+Base de datos               |kay                |#####50%       |
 Doc Strings to fcns         |vinu               |0%             |
 
 ### Color Pallete
