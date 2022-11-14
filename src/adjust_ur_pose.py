@@ -58,7 +58,7 @@ class AdjustPoseClass():
             r.sleep()  #It is very important that the r.sleep function is called at least once every cycle. 
 
     def calc_new_pose(self,ur_pose,img_info):
-        """"Dessc"""
+        """"Compute new pose from og robot pose and diferential pose from img"""
         
         new_pose = [(ur_pose.position.x-img_info.position.x), (ur_pose.position.y-img_info.position.z+0.2), (ur_pose.position.z-img_info.position.y)]
 
