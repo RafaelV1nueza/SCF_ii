@@ -27,16 +27,13 @@
 
 import rospy
 from geometry_msgs.msg import Pose
-from geometry_msgs.msg import PoseStamped
-from tf.transformations import quaternion_multiply
-import numpy as np 
+from collabROB_brain import TrajectoryClient
 
-class CamInfoClass():
-    """Class to invert a vector read fron ROS topic"""
+class AdjustPoseClass():
+    """Class to Adjust Ur Position reading from pose and rotation topic"""
     def __init__(self): 
         rospy.on_shutdown(self.cleanup) 
-
-        self.pub_quat = rospy.Publisher('vectorPose_UR', Pose, queue_size=1)
+        rospy.Subscriber("vector_UR", Pose, self.vector_ur_cb)
         rospy.Subscriber("visp_auto_tracker/object_position", PoseStamped, self.cam_vector)
 
         self.tag = Pose()
@@ -58,34 +55,15 @@ class CamInfoClass():
                 
                 self.pub_quat.publish(inverted)
             r.sleep()  #It is very important that the r.sleep function is called at least once every cycle. 
-    def from_pose2quat(self,pose_data):
-        """"Returns a quaternion as a vector from a Pose message"""
-        x = pose_data.orientation.x
-        y = pose_data.orientation.y
-        z = pose_data.orientation.z
-        w = pose_data.orientation.w
-        quat = [x,y,z,w]
-        return quat
-    def from_quat2pose(self,q):
-        """"Returns a pose mesage from a quaternion vector """
-        q_pose = Pose()
-        q_pose.orientation.x = q[0]
-        q_pose.orientation.y = q[1]
-        q_pose.orientation.z = q[2]
-        q_pose.orientation.w = q[3]
-        return q_pose
-    def cam_vector(self,tag_vector):
-        """Sets self.tag variable with Pose data from a PoseStamped"""
+
+    def vector_ur_cb(self,rot_pose):
+        """Desc"""
         self.tag = tag_vector.pose
         print('Recieved Vector Pose')
         self.image_flag = 1
 
     def cleanup(self): 
-        #This function is called just before finishing the node 
-        # You can use it to clean things up before leaving 
-        # Example: stop the robot before finishing a node.   
         
-        #kill the robot
         print("---------------xxxxx-------------------Ded")
         print("                  __")
         print("     w  c(..)o   (")
@@ -97,6 +75,6 @@ class CamInfoClass():
         print("Vinu     m  m")    
 
 if __name__ == "__main__": 
-    print("Hihi")
-    rospy.init_node("tag_vecTf", anonymous=True) 
-    CamInfoClass()
+
+    rospy.init_node("adjust_pose_node", anonymous=True) 
+    AdjustPoseClass()
