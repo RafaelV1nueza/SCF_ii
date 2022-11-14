@@ -10,9 +10,9 @@
 #                                                                       #
 #########################################################################
 #                                                                       #
-# Test for: cam_vec_tran.py                                             #
+# Test for:turtlebot_brain.py                                           #
 #                                                                       #
-# Version: v1.0.1 (alpha)                                               #
+# Version: v1.0.2 (alpha)                                               #
 #                                                                       #
 # Notes: Test for transformation from quaternion to pose & test for     #
 #        transformation fron pose to quaternion vector                  #
@@ -44,6 +44,6 @@ class TurtleBotBrainTest(unittest.TestCase):
         self.assertEqual(x,-6.5)
         self.assertEqual(y,4.3)
         self.assertEqual(ang,1.57)
-        
+
 if __name__ == '__main__':
     unittest.main()

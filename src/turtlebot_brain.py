@@ -14,7 +14,7 @@
 #                                                                       #
 # Maintainer: vinu                                                      #
 #                                                                       #
-# Version: v1.0.1 (alpha)                                               #
+# Version: v1.0.2 (alpha)                                               #
 #                                                                       #
 # Notes: Turtlebot goal sender ROS node, uses defined goals contained in#
 #       goals.txt inside maps_tb dir. Recieves instr form ROS node. Can #
@@ -22,7 +22,7 @@
 #                                                                       #
 # Latest edit: vinu                                                     #
 #                                                                       #
-# Date: 13.11.2022                                                      #
+# Date: 14.11.2022                                                      #
 #########################################################################
 
 from os import wait
