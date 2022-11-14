@@ -83,8 +83,7 @@ class TrajectoryClient:
     """Small trajectory client to test a joint trajectory"""
 
     def __init__(self):
-        
-
+        rospy.init_node("test_move", anonymous=True)
         timeout = rospy.Duration(5)
         self.switch_srv = rospy.ServiceProxy(
             "controller_manager/switch_controller", SwitchController
@@ -141,7 +140,7 @@ class TrajectoryClient:
         result = trajectory_client.get_result()
         rospy.loginfo("Trajectory execution finished in state {}".format(result.error_code))
 
-    def send_cartesian_trajectory(self):
+    def send_cartesian_trajectory(self, Pose, Rotation):
         """Creates a Cartesian trajectory and sends it using the selected action server"""
         self.switch_controller(self.cartesian_trajectory_controller)
 
@@ -160,24 +159,16 @@ class TrajectoryClient:
 
         # The following list are arbitrary positions
         # Change to your own needs if desired
+        
         pose_list = [
             geometry_msgs.Pose(
                 geometry_msgs.Vector3(0.4, -0.1, 0.4), geometry_msgs.Quaternion(0, 0, 0, 1)
             ),
             geometry_msgs.Pose(
                 geometry_msgs.Vector3(0.4, -0.1, 0.6), geometry_msgs.Quaternion(0, 0, 0, 1)
-            ),
-            geometry_msgs.Pose(
-                geometry_msgs.Vector3(0.4, 0.3, 0.6), geometry_msgs.Quaternion(0, 0, 0, 1)
-            ),
-            geometry_msgs.Pose(
-                geometry_msgs.Vector3(0.4, 0.3, 0.4), geometry_msgs.Quaternion(0, 0, 0, 1)
-            ),
-            geometry_msgs.Pose(
-                geometry_msgs.Vector3(0.4, -0.1, 0.4), geometry_msgs.Quaternion(0, 0, 0, 1)
-            ),
+            )
         ]
-        duration_list = [3.0, 4.0, 5.0, 6.0, 7.0]
+        duration_list = [15.0, 10.0]
         for i, pose in enumerate(pose_list):
             point = CartesianTrajectoryPoint()
             point.pose = pose
@@ -226,11 +217,13 @@ class TrajectoryClient:
 
     def choose_controller(self):
         """Ask the user to select the desired controller from the available list."""
+        #Show controller list
         rospy.loginfo("Available trajectory controllers:")
         for (index, name) in enumerate(JOINT_TRAJECTORY_CONTROLLERS):
             rospy.loginfo("{} (joint-based): {}".format(index, name))
         for (index, name) in enumerate(CARTESIAN_TRAJECTORY_CONTROLLERS):
             rospy.loginfo("{} (Cartesian): {}".format(index + len(JOINT_TRAJECTORY_CONTROLLERS), name))
+        #Allow user input
         choice = -1
         while choice < 0:
             input_str = input(
@@ -265,9 +258,9 @@ class TrajectoryClient:
             + CARTESIAN_TRAJECTORY_CONTROLLERS
             + CONFLICTING_CONTROLLERS
         )
-
+		#from other controllers remove the selected controller
         other_controllers.remove(target_controller)
-
+		
         srv = ListControllersRequest()
         response = self.list_srv(srv)
         for controller in response.controller:
@@ -286,14 +279,10 @@ class TrajectoryClient:
 
 
 if __name__ == "__main__":
+    client = TrajectoryClient() 			#Open an instance of TrajectoryClient class as client
+	
+    trajectory_type = client.choose_controller()	#Run function choose controller in instance client and return str joint or cart
     
-    
-    rospy.init_node("test_move", anonymous=True)
-    client = TrajectoryClient()
-
-    # The controller choice is obviously not required to move the robot. It is a part of this demo
-    # script in order to show all available trajectory controllers.
-    trajectory_type = client.choose_controller()
     if trajectory_type == "joint_based":
         client.send_joint_trajectory()
     elif trajectory_type == "cartesian":
@@ -304,9 +293,3 @@ if __name__ == "__main__":
                 trajectory_type
             )
         )
-
-
-
-
-
-

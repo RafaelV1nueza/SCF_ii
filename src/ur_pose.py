@@ -28,7 +28,7 @@
 import rospy
 #from geometry_msgs.msg import TransformStamped
 from tf2_msgs.msg import TFMessage
-
+from geometry_msgs.msg import Pose
 class RobotPositionClass():
     """This class will publish the translation values from UR robot to use with camera node"""
     def __init__(self):
@@ -36,21 +36,25 @@ class RobotPositionClass():
         #rospy.on_shutdown(self.cleanup) 
         r = rospy.Rate(2) #1Hz
             #-----------------------SUBSCRIBERS---------------------
-        rospy.Subscriber("/tf", TFMessage, self.pos_robot_cb)     #Vector de posicion del robot UR 
+        rospy.Subscriber("/tf", TFMessage, self.pos_robot_cb)     #Vector de posicion del robot UR
+        pose_pub = rospy.Publisher('pose-UR',Pose,queue_size=1) 
         print("Node initialized 2hz")
+        self.flag01=0
         while not rospy.is_shutdown(): 
-            print('Rotation tf')
-
+            print('Pose UR')
+            if self.flag01:
+                pose_pub.publish(self.new_pose)
             r.sleep()
         
     def pos_robot_cb(self, vector_robot):
         """Returns a translation values from UR Robot"""
-        self.pose_x = vector_robot.transforms[0].transform.translation.x
-        print("Pose x: ", self.pose_x)
-        self.pose_y = vector_robot.transforms[0].transform.translation.y
-        print("Pose y: ", self.pose_y)
-        self.pose_z = vector_robot.transforms[0].transform.translation.z
-        print("Pose z: ", self.pose_z)
+        self.new_pose = Pose() 
+        self.new_pose.position.x = vector_robot.transforms[0].transform.translation.x
+        print("Pose x: ", self.new_pose.position.x)
+        self.new_pose.position.y = vector_robot.transforms[0].transform.translation.y
+        print("Pose y: ", self.new_pose.position.y)
+        self.new_pose.position.z = vector_robot.transforms[0].transform.translation.z
+        print("Pose z: ", self.new_pose.position.z)
 
 if __name__ == "__main__": 
     print("Hihi")
