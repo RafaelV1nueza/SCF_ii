@@ -37,7 +37,7 @@ class RobotPositionClass():
         r = rospy.Rate(2) #1Hz
             #-----------------------SUBSCRIBERS---------------------
         rospy.Subscriber("/tf", TFMessage, self.pos_robot_cb)     #Vector de posicion del robot UR
-        pose_pub = rospy.Publisher('pose-UR',Pose,queue_size=1) 
+        pose_pub = rospy.Publisher('pose_UR',Pose,queue_size=1) 
         print("Node initialized 2hz")
         self.flag01=0
         while not rospy.is_shutdown(): 

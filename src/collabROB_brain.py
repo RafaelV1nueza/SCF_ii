@@ -165,7 +165,7 @@ class TrajectoryClient:
                 geometry_msgs.Vector3(0.4, -0.1, 0.4), geometry_msgs.Quaternion(0, 0, 0, 1)
             ),
             geometry_msgs.Pose(
-                geometry_msgs.Vector3(0.4, -0.1, 0.6), geometry_msgs.Quaternion(0, 0, 0, 1)
+                geometry_msgs.Vector3(Pose.x, Pose.y, Pose.z), geometry_msgs.Quaternion(0, 0, 0, 1)
             )
         ]
         duration_list = [15.0, 10.0]
