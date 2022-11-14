@@ -149,6 +149,20 @@ Developed by S.T.E.V.E for SCF
         with open(self.goals_file, 'r') as f:
                 lines = f.read()
         return lines
+
+    def getGoalFromDatabase(self,lines,goal_name):
+        a = 1
+        b = len(goal_name)
+        self.where = (goal_name[a:b])
+        c = lines.find(goal_name[a:b])
+        d = lines.find(',',c+b)
+        x=float(lines[c+b:d])
+        e = lines.find(',',d+1)
+        y= float(lines[d+1:e])
+        f = lines.find('\n',e+1)
+        ang=float(lines[e+1:f])
+        return x,y,ang
+
     def instr_tb_callback(self, msg_string):
         
         self.inst = msg_string.data
@@ -159,20 +173,8 @@ Developed by S.T.E.V.E for SCF
             print('Place')
             self.action = 1
             lines = self.read_goals_file()
-            a = 1
-            b = len(self.inst)
-            self.where = (self.inst[a:b])
-            c = lines.find(self.inst[a:b])
-            print(c)
-            d = lines.find(',',c+b)
-            x=float(lines[c+b:d])
-            print(x)
-            e = lines.find(',',d+1)
-            y= float(lines[d+1:e])
-            print(y)
-            f = lines.find('\n',e+1)
-            ang=float(lines[e+1:f])
-            print(ang)
+            goal_name = self.inst
+            x,y,ang = self.getGoalFromDatabase(lines,goal_name)
 
             self.goal = self.set_goal(x,y,ang)
 
