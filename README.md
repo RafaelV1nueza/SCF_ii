@@ -16,10 +16,11 @@
 
 **TO DO:**                  |**Responsable:**   |**Progreso:**  |
 ____________________________|___________________|_______________|
-Test functions              |vinu               |0%             |
+Test functions              |vinu               |####40%        |
 UR movimientos              |josh               |#10%           |
 Camara Implementations      |valeria            |###30%         |
 Base de datos               |kay                |unk            |
+Doc Strings to fcns         |vinu               |0%             |
 
 ### Color Pallete
 --black-coral: #696d7dff;
