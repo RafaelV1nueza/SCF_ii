@@ -1,4 +1,31 @@
 #!/usr/bin/env python 
+#########################################################################
+#   _________  ___________ ___________ ____   ____ ___________          #
+#  /   _____/  \__    ___/ \_   _____/ \   \ /   / \_   _____/          #
+#  \_____  \     |    |     |    __)_   \   Y   /   |    __)_           #
+#  /        \    |    |     |        \   \     /    |        \          #
+# /_______  / /\ |____| /\ /_______  / /\ \___/ /\ /_______  / /\       #
+#         \/  \/        \/         \/  \/       \/         \/  \/       #
+#                                                                       #
+#########################################################################
+#                                                                       #
+# File Name: node_red_run.py                                            #
+#                                                                       #
+# Maintainer:vinu                                                       #
+#                                                                       #
+# Version: v1.0.1 (alpha)                                               #
+#                                                                       #
+# Notes: Runs the NodeRed command in a hidden terminal as an object, to #
+#       kill the procces it finds the process id w/ the function ps ax  #
+#       | grep node-red. It may contain some bugs. To en an umproperly  #
+#       finished process run the command manually and kill the proces   #
+#       with the node-red id.                                           #
+#                                                                       #
+# Latest edit: vinu                                                     #
+#                                                                       #
+# Date: 13.11.2022                                                      #
+#########################################################################
+
 from os import wait
 import rospy 
 import os
