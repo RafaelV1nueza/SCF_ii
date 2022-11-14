@@ -26,6 +26,7 @@
 #########################################################################
 
 import rospy
+import time
 from geometry_msgs.msg import Pose
 from collabROB_brain import TrajectoryClient
 
@@ -34,33 +35,36 @@ class AdjustPoseClass():
     def __init__(self): 
         rospy.on_shutdown(self.cleanup) 
         rospy.Subscriber("vector_UR", Pose, self.vector_ur_cb)
-        rospy.Subscriber("visp_auto_tracker/object_position", PoseStamped, self.cam_vector)
+        rospy.Subscriber("pose_UR", Pose, self.pose_ur_cb)
 
-        self.tag = Pose()
-        self.image_flag  = 0
+        self.pose_flag = 0
+        self.vector_flag  = 0
 
         #********** INIT NODE **********### 
         r = rospy.Rate(2) #1Hz 
         print("Node initialized 2hz")
         while not rospy.is_shutdown(): 
-            print('Rotation tf')
-            if self.image_flag:
-                quat = self.from_pose2quat(self.tag)
-                print("Recieved Quaternion:")
-                print(quat)
-                print("Inverted QUaternion:")
-                f = quaternion_multiply(quat,[0, 1, 0, 0])
-                inverted = self.from_quat2pose(f)
-                print(inverted)
+            print('While loop')
+            if self.vector_flag and self.pose_flag:
+                print("Sup")
+
                 
-                self.pub_quat.publish(inverted)
+            else:
+                print("Either pose or rot not recieved")
+                
             r.sleep()  #It is very important that the r.sleep function is called at least once every cycle. 
 
     def vector_ur_cb(self,rot_pose):
         """Desc"""
-        self.tag = tag_vector.pose
+        self.image_info = rot_pose
+        print('Recieved Image Pose')
+        self.vector_flag = 1
+
+    def pose_ur_cb(self,pose_pose):
+        """Desc"""
+        self.robot_pose = pose_pose
         print('Recieved Vector Pose')
-        self.image_flag = 1
+        self.pose_flag = 1
 
     def cleanup(self): 
         

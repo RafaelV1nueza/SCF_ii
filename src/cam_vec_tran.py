@@ -55,7 +55,7 @@ class CamInfoClass():
                 f = quaternion_multiply(quat,[0, 1, 0, 0])
                 inverted = self.from_quat2pose(f)
                 print(inverted)
-                
+                inverted.position = self.tag.position
                 self.pub_quat.publish(inverted)
             r.sleep()  #It is very important that the r.sleep function is called at least once every cycle. 
     def from_pose2quat(self,pose_data):
