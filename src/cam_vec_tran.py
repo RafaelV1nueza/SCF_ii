@@ -48,25 +48,30 @@ class CamInfoClass():
         while not rospy.is_shutdown(): 
             print('Rotation tf')
             if self.image_flag:
-                x = self.tag.orientation.x
-                y = self.tag.orientation.y
-                z = self.tag.orientation.z
-                w = self.tag.orientation.w
-                quat = [x,y,z,w]
-                print("Quat")
+                quat = self.from_pose2quat(self.tag)
+                print("Recieved Quaternion:")
                 print(quat)
-                print("nega quaternion")
+                print("Inverted QUaternion:")
                 f = quaternion_multiply(quat,[0, 1, 0, 0])
-                inverted = Pose()
-                inverted.orientation.x = f[0]
-                inverted.orientation.y = f[1]
-                inverted.orientation.z = f[2]
-                inverted.orientation.w = f[3]
+                inverted = self.from_quat2pose(f)
                 print(inverted)
                 
                 self.pub_quat.publish(inverted)
             r.sleep()  #It is very important that the r.sleep function is called at least once every cycle. 
-
+    def from_pose2quat(self,pose_data):
+        x = pose_data.orientation.x
+        y = pose_data.orientation.y
+        z = pose_data.orientation.z
+        w = pose_data.orientation.w
+        quat = [x,y,z,w]
+        return quat
+    def from_quat2pose(self,q):
+        q_pose = Pose()
+        q_pose.orientation.x = q[0]
+        q_pose.orientation.y = q[1]
+        q_pose.orientation.z = q[2]
+        q_pose.orientation.w = q[3]
+        return q_pose
     def cam_vector(self,tag_vector):
         self.tag = tag_vector.pose
         print('Recieved Vector Pose')
