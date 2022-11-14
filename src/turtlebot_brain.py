@@ -68,10 +68,11 @@ class SendGoalClass():
         self.msg_ask = 0
         self.msg_av =0
 
+        self.goals_file = '/home/vinu/catkin_ws/src/scf_reto/maps_tb/goals.txt'
+
         # Define Goals
         #Read Goal file
-        with open('/home/vinu/catkin_ws/src/scf_reto/maps_tb/goals.txt', 'r') as f:
-            lines = f.readlines()
+        lines = self.read_goals_file
         print('Posiciones:')
         for line in lines:
             print(line)
@@ -144,6 +145,10 @@ Developed by S.T.E.V.E for SCF
             
             r.sleep()  #It is very important that the r.sleep function is called at least once every cycle. 
 
+    def read_goals_file(self):
+        with open(self.goals_file, 'r') as f:
+                lines = f.read()
+        return lines
     def instr_tb_callback(self, msg_string):
         
         self.inst = msg_string.data
@@ -153,8 +158,7 @@ Developed by S.T.E.V.E for SCF
             #Moverse a un punto
             print('Place')
             self.action = 1
-            with open('/home/vinu/catkin_ws/src/scf_reto/maps_tb/goals.txt', 'r') as f:
-                lines = f.read()
+            lines = self.read_goals_file()
             a = 1
             b = len(self.inst)
             self.where = (self.inst[a:b])
