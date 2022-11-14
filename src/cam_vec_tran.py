@@ -32,7 +32,7 @@ from tf.transformations import quaternion_multiply
 import numpy as np 
 
 class CamInfoClass():
-    # 
+    """Class to invert a vector read fron ROS topic"""
     def __init__(self): 
         rospy.on_shutdown(self.cleanup) 
 
@@ -59,6 +59,7 @@ class CamInfoClass():
                 self.pub_quat.publish(inverted)
             r.sleep()  #It is very important that the r.sleep function is called at least once every cycle. 
     def from_pose2quat(self,pose_data):
+        """"Returns a quaternion as a vector from a Pose message"""
         x = pose_data.orientation.x
         y = pose_data.orientation.y
         z = pose_data.orientation.z
@@ -66,6 +67,7 @@ class CamInfoClass():
         quat = [x,y,z,w]
         return quat
     def from_quat2pose(self,q):
+        """"Returns a pose mesage from a quaternion vector """
         q_pose = Pose()
         q_pose.orientation.x = q[0]
         q_pose.orientation.y = q[1]
@@ -73,6 +75,7 @@ class CamInfoClass():
         q_pose.orientation.w = q[3]
         return q_pose
     def cam_vector(self,tag_vector):
+        """Sets self.tag variable with Pose data from a PoseStamped"""
         self.tag = tag_vector.pose
         print('Recieved Vector Pose')
         self.image_flag = 1
