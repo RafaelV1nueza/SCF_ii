@@ -29,7 +29,7 @@ import rospy
 #from geometry_msgs.msg import TransformStamped
 from tf2_msgs.msg import TFMessage
 
-class TestClass():
+class RobotPositionClass():
     """This class will publish the translation values from UR robot to use with camera node"""
     def __init__(self):
         """Init""" 
@@ -55,4 +55,4 @@ class TestClass():
 if __name__ == "__main__": 
     print("Hihi")
     rospy.init_node("test_node", anonymous=True) 
-    TestClass()
+    RobotPositionClass()
