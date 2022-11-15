@@ -279,18 +279,18 @@ class TrajectoryClient:
         self.switch_srv(srv)
 
 
-if __name__ == "__main__":
-    client = TrajectoryClient() 			#Open an instance of TrajectoryClient class as client
+# if __name__ == "__main__":
+#     client = TrajectoryClient() 			#Open an instance of TrajectoryClient class as client
 	
-    trajectory_type = client.choose_controller()	#Run function choose controller in instance client and return str joint or cart
+#     trajectory_type = client.choose_controller()	#Run function choose controller in instance client and return str joint or cart
     
-    if trajectory_type == "joint_based":
-        client.send_joint_trajectory()
-    elif trajectory_type == "cartesian":
-        client.send_cartesian_trajectory()
-    else:
-        raise ValueError(
-            "I only understand types 'joint_based' and 'cartesian', but got '{}'".format(
-                trajectory_type
-            )
-        )
+#     if trajectory_type == "joint_based":
+#         client.send_joint_trajectory()
+#     elif trajectory_type == "cartesian":
+#         client.send_cartesian_trajectory()
+#     else:
+#         raise ValueError(
+#             "I only understand types 'joint_based' and 'cartesian', but got '{}'".format(
+#                 trajectory_type
+#             )
+#         )
