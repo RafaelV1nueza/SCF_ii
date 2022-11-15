@@ -37,12 +37,16 @@ class AdjustPoseClass():
         rospy.Subscriber("vector_UR", Pose, self.vector_ur_cb)
         rospy.Subscriber("pose_UR", Pose, self.pose_ur_cb)
         
+        #Init Class from Robot Brain
+        client = TrajectoryClient()
+
+
         self.pose_flag = 0
         self.vector_flag  = 0
 
-        #********** INIT NODE **********### 
-        r = rospy.Rate(2) #1Hz 
-        print("Node initialized 2hz")
+        ###********** INIT NODE **********### 
+        r = rospy.Rate(0.2) #1Hz 
+        print("Node initialized 0.2hz")
         while not rospy.is_shutdown(): 
             print('While loop')
             if self.vector_flag and self.pose_flag:
@@ -50,7 +54,8 @@ class AdjustPoseClass():
                 print("Actual Pose")
                 print(self.robot_pose)
                 poses = self.calc_new_pose(self.robot_pose,self.image_info)
-                print()
+                print(poses)
+                
                 
             else:
                 print("Either pose or rot not recieved")
@@ -91,4 +96,5 @@ class AdjustPoseClass():
 if __name__ == "__main__": 
 
     rospy.init_node("adjust_pose_node", anonymous=True) 
+    
     AdjustPoseClass()
