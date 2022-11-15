@@ -53,9 +53,20 @@ class AdjustPoseClass():
                 print("Sup")
                 print("Actual Pose")
                 print(self.robot_pose)
-                poses = self.calc_new_pose(self.robot_pose,self.image_info)
-                print(poses)
-                
+                poseP,poseR = self.calc_new_pose(self.robot_pose,self.image_info)
+                print(poseP)
+                print(poseR)
+                user_input = input("Mover el robot a la pose nueva? Y/N: ")
+                if user_input in ['Yes', 'Y', 'y', 'si', 'Si', 'yes', 'YES', 'SI', 'sipis']:
+                    print('OK moviendo...')
+                    print(poseP)
+                    print(poseP)
+                    client.cartesian_trajectory_controller(poseP,poseR)
+                    print('Successful..')
+                elif user_input in ['N','n','NO','no','No','Nope','nopis']:
+                    print('ok..Waiting for new data poses')
+                else:
+                    print('Unselected & Waiting for new data poses')
                 
             else:
                 print("Either pose or rot not recieved")
@@ -64,10 +75,9 @@ class AdjustPoseClass():
 
     def calc_new_pose(self,ur_pose,img_info):
         """"Compute new pose from og robot pose and diferential pose from img"""
-        
         new_pose = [(ur_pose.position.x-img_info.position.x), (ur_pose.position.y-img_info.position.z+0.2), (ur_pose.position.z-img_info.position.y)]
-
-        return new_pose
+        newRot = [img_info.orientation.x, img_info.orientation.y, img_info.orientation.z, img_info.orientation.w]
+        return new_pose,newRot
 
     def vector_ur_cb(self,rot_pose):
         """Desc"""
