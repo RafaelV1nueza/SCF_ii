@@ -165,7 +165,7 @@ class TrajectoryClient:
                 geometry_msgs.Vector3(0.4, -0.1, 0.4), geometry_msgs.Quaternion(0, 0, 0, 1)
             ),
             geometry_msgs.Pose(
-                geometry_msgs.Vector3(Pose.x, Pose.y, Pose.z), geometry_msgs.Quaternion(0, 0, 0, 1)
+                geometry_msgs.Vector3(Pose[0], Pose[1], Pose[2]), geometry_msgs.Quaternion(Rotation[0], Rotation[1], Rotation[2], Rotation[3])
             )
         ]
         duration_list = [15.0, 10.0]
@@ -226,10 +226,11 @@ class TrajectoryClient:
         #Allow user input
         choice = -1
         while choice < 0:
-            input_str = input(
-                "Please choose a controller by entering its number (Enter '0' if "
-                "you are unsure / don't care): "
-            )
+            #input_str = input(
+            #    "Please choose a controller by entering its number (Enter '0' if "
+            #    "you are unsure / don't care): "
+            #)
+            input_str = '6'
             try:
                 choice = int(input_str)
                 if choice < 0 or choice >= len(JOINT_TRAJECTORY_CONTROLLERS) + len(
