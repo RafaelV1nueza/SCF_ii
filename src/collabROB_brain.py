@@ -83,7 +83,7 @@ class TrajectoryClient:
     """Small trajectory client to test a joint trajectory"""
 
     def __init__(self):
-        rospy.init_node("test_move", anonymous=True)
+        #rospy.init_node("test_move", anonymous=True)
         timeout = rospy.Duration(5)
         self.switch_srv = rospy.ServiceProxy(
             "controller_manager/switch_controller", SwitchController
@@ -161,14 +161,14 @@ class TrajectoryClient:
         # Change to your own needs if desired
         
         pose_list = [
-            geometry_msgs.Pose(
-                geometry_msgs.Vector3(0.4, -0.1, 0.4), geometry_msgs.Quaternion(0, 0, 0, 1)
-            ),
+            #geometry_msgs.Pose(
+            #    geometry_msgs.Vector3(0.4, -0.1, 0.4), geometry_msgs.Quaternion(0, 0, 0, 1)
+            #),
             geometry_msgs.Pose(
                 geometry_msgs.Vector3(Pose[0], Pose[1], Pose[2]), geometry_msgs.Quaternion(Rotation[0], Rotation[1], Rotation[2], Rotation[3])
             )
         ]
-        duration_list = [15.0, 10.0]
+        duration_list = [10.0]
         for i, pose in enumerate(pose_list):
             point = CartesianTrajectoryPoint()
             point.pose = pose

@@ -49,13 +49,15 @@ class RobotPositionClass():
     def pos_robot_cb(self, vector_robot):
         """Returns a translation values from UR Robot"""
         self.new_pose = Pose() 
+        print('-----------------------')
         self.new_pose.position.x = vector_robot.transforms[0].transform.translation.x
         print("Pose x: ", self.new_pose.position.x)
         self.new_pose.position.y = vector_robot.transforms[0].transform.translation.y
         print("Pose y: ", self.new_pose.position.y)
         self.new_pose.position.z = vector_robot.transforms[0].transform.translation.z
         print("Pose z: ", self.new_pose.position.z)
-
+        print('-----------------------')
+        self.flag01 = 1
 if __name__ == "__main__": 
     print("Hihi")
     rospy.init_node("test_node", anonymous=True) 

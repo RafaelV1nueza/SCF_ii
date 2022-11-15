@@ -61,10 +61,14 @@ class AdjustPoseClass():
                     print('OK moviendo...')
                     print(poseP)
                     print(poseP)
-                    client.cartesian_trajectory_controller(poseP,poseR)
+                    client.send_cartesian_trajectory(poseP,poseR)
                     print('Successful..')
                 elif user_input in ['N','n','NO','no','No','Nope','nopis']:
                     print('ok..Waiting for new data poses')
+                    self.vector_flag = 0
+                    self.pose_flag = 0
+
+
                 else:
                     print('Unselected & Waiting for new data poses')
                 
@@ -82,13 +86,15 @@ class AdjustPoseClass():
     def vector_ur_cb(self,rot_pose):
         """Desc"""
         self.image_info = rot_pose
-        print('Recieved Image Pose')
+        if not self.vector_flag:
+            print('    Recieved Image Pose')
         self.vector_flag = 1
 
     def pose_ur_cb(self,pose_pose):
         """Desc"""
         self.robot_pose = pose_pose
-        print('Recieved Vector Pose')
+        if not self.pose_flag:
+            print('    Recieved Vector Pose')
         self.pose_flag = 1
 
     def cleanup(self): 
