@@ -165,7 +165,7 @@ class TrajectoryClient:
                 geometry_msgs.Vector3(0.4, -0.1, 0.4), geometry_msgs.Quaternion(0, 0, 0, 1)
             ),
             geometry_msgs.Pose(
-                geometry_msgs.Vector3(Pose.x, Pose.y, Pose.z), geometry_msgs.Quaternion(0, 0, 0, 1)
+                geometry_msgs.Vector3(Pose.x, Pose.y, Pose.z), geometry_msgs.Quaternion(Rotation.x, Rotation.y, Rotation.z, Rotation.w)
             )
         ]
         duration_list = [15.0, 10.0]
@@ -215,12 +215,15 @@ class TrajectoryClient:
             rospy.loginfo("Exiting as requested by user.")
             sys.exit(0)
 
+#--------------------------------------------------------------------------------------------------------------------
     def choose_controller(self):
         """Ask the user to select the desired controller from the available list."""
         #Show controller list
         rospy.loginfo("Available trajectory controllers:")
-        for (index, name) in enumerate(JOINT_TRAJECTORY_CONTROLLERS):
-            rospy.loginfo("{} (joint-based): {}".format(index, name))
+
+        #for (index, name) in enumerate(JOINT_TRAJECTORY_CONTROLLERS):
+        #    rospy.loginfo("{} (joint-based): {}".format(index, name))
+        
         for (index, name) in enumerate(CARTESIAN_TRAJECTORY_CONTROLLERS):
             rospy.loginfo("{} (Cartesian): {}".format(index + len(JOINT_TRAJECTORY_CONTROLLERS), name))
         #Allow user input
@@ -242,14 +245,16 @@ class TrajectoryClient:
                     choice = -1
             except ValueError:
                 rospy.loginfo("Input is not a valid number. Please try again.")
-        if choice < len(JOINT_TRAJECTORY_CONTROLLERS):
-            self.joint_trajectory_controller = JOINT_TRAJECTORY_CONTROLLERS[choice]
-            return "joint_based"
-
-        self.cartesian_trajectory_controller = CARTESIAN_TRAJECTORY_CONTROLLERS[
-            choice - len(JOINT_TRAJECTORY_CONTROLLERS)
+        # if choice < len(JOINT_TRAJECTORY_CONTROLLERS):
+        #     self.joint_trajectory_controller = JOINT_TRAJECTORY_CONTROLLERS[choice]
+        #     return "joint_based"
+            if input_str == '6':
+                self.cartesian_trajectory_controller = CARTESIAN_TRAJECTORY_CONTROLLERS[
+                choice - len(JOINT_TRAJECTORY_CONTROLLERS)
         ]
         return "cartesian"
+
+# ------------------------------------------------------------------------------------------------------------------
 
     def switch_controller(self, target_controller):
         """Activates the desired controller and stops all others from the predefined list above"""
@@ -278,18 +283,18 @@ class TrajectoryClient:
         self.switch_srv(srv)
 
 
-if __name__ == "__main__":
-    client = TrajectoryClient() 			#Open an instance of TrajectoryClient class as client
+# if __name__ == "__main__":
+#     client = TrajectoryClient() 			#Open an instance of TrajectoryClient class as client
 	
-    trajectory_type = client.choose_controller()	#Run function choose controller in instance client and return str joint or cart
+#     trajectory_type = client.choose_controller()	#Run function choose controller in instance client and return str joint or cart
     
-    if trajectory_type == "joint_based":
-        client.send_joint_trajectory()
-    elif trajectory_type == "cartesian":
-        client.send_cartesian_trajectory()
-    else:
-        raise ValueError(
-            "I only understand types 'joint_based' and 'cartesian', but got '{}'".format(
-                trajectory_type
-            )
-        )
+#     if trajectory_type == "joint_based":
+#         client.send_joint_trajectory()
+#     elif trajectory_type == "cartesian":
+#         client.send_cartesian_trajectory()
+#     else:
+#         raise ValueError(
+#             "I only understand types 'joint_based' and 'cartesian', but got '{}'".format(
+#                 trajectory_type
+#             )
+#         )
