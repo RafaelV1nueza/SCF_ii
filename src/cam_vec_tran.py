@@ -52,7 +52,8 @@ class CamInfoClass():
                 print("Recieved Quaternion:")
                 print(quat)
                 print("Inverted QUaternion:")
-                f = quat ##quaternion_multiply(quat,[0, 1, 0, 0])
+                a = quaternion_multiply(quat,[0, 1, 0, 0])
+                f = quaternion_multiply(a,[0.7071068, 0, 0, 0.7071068])
                 inverted = self.from_quat2pose(f)
                 inverted.position = self.tag.position
                 print(inverted)

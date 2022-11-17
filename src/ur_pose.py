@@ -56,6 +56,15 @@ class RobotPositionClass():
         print("Pose y: ", self.new_pose.position.y)
         self.new_pose.position.z = vector_robot.transforms[0].transform.translation.z
         print("Pose z: ", self.new_pose.position.z)
+        print("---")
+        self.new_pose.orientation.x = vector_robot.transforms[0].transform.rotation.x
+        print("rot x: ", self.new_pose.orientation.x)
+        self.new_pose.orientation.y = vector_robot.transforms[0].transform.rotation.y
+        print("rot y: ", self.new_pose.orientation.y)
+        self.new_pose.orientation.z = vector_robot.transforms[0].transform.rotation.z
+        print("rot z: ", self.new_pose.orientation.z)
+        self.new_pose.orientation.w = vector_robot.transforms[0].transform.rotation.w
+        print("rot z: ", self.new_pose.orientation.w)
         print('-----------------------')
         self.flag01 = 1
 if __name__ == "__main__": 
