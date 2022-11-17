@@ -58,7 +58,7 @@ class AdjustPoseClass():
                 print("X: ",str(self.robot_pose.position.x)," to ", str(poseP[0]))
                 print("Y: ",str(self.robot_pose.position.y)," to ",str(poseP[1]))
                 print("Z: ",str(self.robot_pose.position.z)," to ",str(poseP[2]))
-                print("New Orientation: ")
+                print("Atual Pose                New Orientation: ")
                 print("X: ",str(self.robot_pose.orientation.x)," to ",str(poseR[0]))
                 print("Y: ",str(self.robot_pose.orientation.y)," to ",str(poseR[1]))
                 print("Z: ",str(self.robot_pose.orientation.z)," to ",str(poseR[2])) 
