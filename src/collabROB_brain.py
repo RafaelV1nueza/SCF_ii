@@ -14,7 +14,7 @@
 #                                                                       #
 # Maintainer: vinu/josh                                                 #
 #                                                                       #
-# Version: v1.0.1 (alpha)                                               #
+# Version: v1.0.2 (alpha)                                               #
 #                                                                       #
 # Notes: Reads x y and z pose form a tf topic. To add: publish.         #
 #                                                                       #

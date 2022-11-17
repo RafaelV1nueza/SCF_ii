@@ -14,7 +14,7 @@
 #                                                                       #
 # Maintainer:vinu,valeria                                               #
 #                                                                       #
-# Version: v1.0.1 (alpha)                                               #
+# Version: v1.0.2 (alpha)                                               #
 #                                                                       #
 # Notes: Recieves a quaternion from a topic and inverts x and z axes,   #
 #        Efective 180 degree rotation y axis from orientation ref.      #
@@ -54,8 +54,8 @@ class CamInfoClass():
                 print("Inverted QUaternion:")
                 f = quaternion_multiply(quat,[0, 1, 0, 0])
                 inverted = self.from_quat2pose(f)
-                print(inverted)
                 inverted.position = self.tag.position
+                print(inverted)
                 self.pub_quat.publish(inverted)
             r.sleep()  #It is very important that the r.sleep function is called at least once every cycle. 
     def from_pose2quat(self,pose_data):

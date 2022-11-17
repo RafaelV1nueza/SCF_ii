@@ -14,7 +14,7 @@
 #                                                                       #
 # Maintainer:vinu                                                       #
 #                                                                       #
-# Version: v1.0.1 (alpha)                                               #
+# Version: v1.0.2 (alpha)                                               #
 #                                                                       #
 # Notes: Recieves a quaternion from a topic and inverts x and z axes,   #
 #        Efective 180 degree rotation y axis from orientation ref.      #

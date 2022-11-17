@@ -13,7 +13,7 @@
 #                                                                       #
 # Maintainer:vinu                                                       #
 #                                                                       #
-# Version: v1.0.1 (alpha)                                               #
+# Version: v1.0.2 (alpha)                                               #
 #                                                                       #
 # Notes: Runs the NodeRed command in a hidden terminal as an object, to #
 #       kill the procces it finds the process id w/ the function ps ax  #
