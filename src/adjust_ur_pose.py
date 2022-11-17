@@ -40,7 +40,7 @@ class AdjustPoseClass():
         #Init Class from Robot Brain
         client = TrajectoryClient()
 
-
+        self.sep_const = 0.2 ##20cm de separacion
         self.pose_flag = 0
         self.vector_flag  = 0
 
@@ -54,13 +54,20 @@ class AdjustPoseClass():
                 print("Actual Pose")
                 print(self.robot_pose)
                 poseP,poseR = self.calc_new_pose(self.robot_pose,self.image_info)
-                print(poseP)
-                print(poseR)
+                print("New Pose:")
+                print("X: ",str(poseP[0]))
+                print("Y: ",str(poseP[1]))
+                print("Z: ",str(poseP[2]))
+                print("New Orientation: ")
+                print("X: ",str(poseR[0]))
+                print("Y: ",str(poseR[1]))
+                print("Z: ",str(poseR[2])) 
+                print("Z: ",str(poseR[3])) 
                 user_input = input("Mover el robot a la pose nueva? Y/N: ")
                 if user_input in ['Yes', 'Y', 'y', 'si', 'Si', 'yes', 'YES', 'SI', 'sipis']:
                     print('OK moviendo...')
                     print(poseP)
-                    print(poseP)
+                    print(poseR)
                     client.send_cartesian_trajectory(poseP,poseR)
                     print('Successful..')
                 elif user_input in ['N','n','NO','no','No','Nope','nopis']:
@@ -79,7 +86,7 @@ class AdjustPoseClass():
 
     def calc_new_pose(self,ur_pose,img_info):
         """"Compute new pose from og robot pose and diferential pose from img"""
-        new_pose = [(ur_pose.position.x-img_info.position.x), (ur_pose.position.y-img_info.position.z+0.2), (ur_pose.position.z-img_info.position.y)]
+        new_pose = [(ur_pose.position.x+img_info.position.x), (ur_pose.position.y-img_info.position.z+self.sep_const), (ur_pose.position.z-img_info.position.y)]
         newRot = [img_info.orientation.x, img_info.orientation.y, img_info.orientation.z, img_info.orientation.w]
         return new_pose,newRot
 
