@@ -64,7 +64,7 @@ class AdjustPoseClass():
                 print("Z: ",str(self.robot_pose.orientation.z)," to ",str(poseR[2])) 
                 print("W: ",str(self.robot_pose.orientation.w)," to ",str(poseR[3])) 
                 user_input = input("Mover el robot a la pose nueva? Y/N: ")
-                if user_input in ['Yes', 'Y', 'y', 'si', 'Si', 'yes', 'YES', 'SI', 'sipis']:
+                if user_input in ['Yes', 'Y', 'y', 'si', 'Si', 'yes', 'YES', 'SI', 'sipis','sip']:
                     print('OK moviendo...')
                     print(poseP)
                     print(poseR)
