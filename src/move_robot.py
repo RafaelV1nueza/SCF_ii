@@ -72,8 +72,6 @@ class AdjustRobotClass():
     def __init__(self): 
         
         rospy.on_shutdown(self.cleanup) 
-        rospy.Subscriber("vector_UR", Pose, self.vector_ur_cb)
-        rospy.Subscriber("pose_UR", Pose, self.pose_ur_cb)
         
         timeout = rospy.Duration(5)
         self.switch_srv = rospy.ServiceProxy(
@@ -88,6 +86,9 @@ class AdjustRobotClass():
             rospy.logerr("Could not reach controller switch service. Msg: {}".format(err))
             sys.exit(-1)
 
+        rospy.Subscriber("vector_UR", Pose, self.vector_ur_cb)
+        rospy.Subscriber("pose_UR", Pose, self.pose_ur_cb)
+        
         self.joint_trajectory_controller = JOINT_TRAJECTORY_CONTROLLERS[0]
         self.cartesian_trajectory_controller = CARTESIAN_TRAJECTORY_CONTROLLERS[0]
 
@@ -96,7 +97,7 @@ class AdjustRobotClass():
         self.vector_flag  = 0
 
         controller_selec = self.choose_controller()
-        
+
         ###********** INIT NODE **********### 
         r = rospy.Rate(0.2) #1Hz 
         print("Node initialized 0.2hz")
