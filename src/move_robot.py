@@ -95,6 +95,8 @@ class AdjustRobotClass():
         self.pose_flag = 0
         self.vector_flag  = 0
 
+        controller_selec = self.choose_controller()
+        
         ###********** INIT NODE **********### 
         r = rospy.Rate(0.2) #1Hz 
         print("Node initialized 0.2hz")
@@ -134,6 +136,43 @@ class AdjustRobotClass():
                 print("Either pose or rot not recieved")
 
             r.sleep()  #It is very important that the r.sleep function is called at least once every cycle.
+
+    def choose_controller(self):
+        """Ask the user to select the desired controller from the available list."""
+        #Show controller list
+        rospy.loginfo("Available trajectory controllers:")
+        for (index, name) in enumerate(JOINT_TRAJECTORY_CONTROLLERS):
+            rospy.loginfo("{} (joint-based): {}".format(index, name))
+        for (index, name) in enumerate(CARTESIAN_TRAJECTORY_CONTROLLERS):
+            rospy.loginfo("{} (Cartesian): {}".format(index + len(JOINT_TRAJECTORY_CONTROLLERS), name))
+        #Allow user input
+        choice = -1
+        while choice < 0:
+            #input_str = input(
+            #    "Please choose a controller by entering its number (Enter '0' if "
+            #    "you are unsure / don't care): "
+            #)
+            input_str = '6'
+            try:
+                choice = int(input_str)
+                if choice < 0 or choice >= len(JOINT_TRAJECTORY_CONTROLLERS) + len(
+                    CARTESIAN_TRAJECTORY_CONTROLLERS
+                ):
+                    rospy.loginfo(
+                        "{} not inside the list of options. "
+                        "Please enter a valid index from the list above.".format(choice)
+                    )
+                    choice = -1
+            except ValueError:
+                rospy.loginfo("Input is not a valid number. Please try again.")
+        if choice < len(JOINT_TRAJECTORY_CONTROLLERS):
+            self.joint_trajectory_controller = JOINT_TRAJECTORY_CONTROLLERS[choice]
+            return "joint_based"
+
+        self.cartesian_trajectory_controller = CARTESIAN_TRAJECTORY_CONTROLLERS[
+            choice - len(JOINT_TRAJECTORY_CONTROLLERS)
+        ]
+        return "cartesian"
 
     def send_cartesian_trajectory(self, Pose, Rotation):
         """Creates a Cartesian trajectory and sends it using the selected action server"""
