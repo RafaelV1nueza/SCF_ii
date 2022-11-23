@@ -1,0 +1,6 @@
+<launch>
+    <include file= "$(find ur_robot_driver)/launch/ur5e_bringup.launch" />
+    <node pkg="reto_scf" type="cam_vec_tran.py" name="cam_vec_tran" >
+    <node pkg="reto_scf" type="ur_pose.py" name="cam_vec_tran" >
+
+</launch>
