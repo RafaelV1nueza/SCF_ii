@@ -1,0 +1,69 @@
+[
+    {
+        "id": "6080b4ad35bf98ac",
+        "type": "tab",
+        "label": "cam_comm_recieve",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "5cf690242016a3a1",
+        "type": "ros-publisher",
+        "z": "6080b4ad35bf98ac",
+        "topicname": "/vector_UR",
+        "typepackage": "geometry_msgs",
+        "typename": "Pose",
+        "x": 810,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "ae1ff3aa88c5f9d2",
+        "type": "mqtt in",
+        "z": "6080b4ad35bf98ac",
+        "name": "RECIEVE_Data",
+        "topic": "tag_vector",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "71a60435a387355d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 280,
+        "y": 160,
+        "wires": [
+            [
+                "5cf690242016a3a1"
+            ]
+        ]
+    },
+    {
+        "id": "71a60435a387355d",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]

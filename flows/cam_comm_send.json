@@ -1,0 +1,88 @@
+[
+    {
+        "id": "66109da7b04f3737",
+        "type": "tab",
+        "label": "Cam_Communication_send",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "f4c28ace81f430ea",
+        "type": "mqtt out",
+        "z": "66109da7b04f3737",
+        "name": "SEND_DATA",
+        "topic": "tag_vector",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "71a60435a387355d",
+        "x": 830,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "34dbc0a19c09290d",
+        "type": "ros-subscriber",
+        "z": "66109da7b04f3737",
+        "topicname": "/vector_UR",
+        "typepackage": "geometry_msgs",
+        "typename": "Pose",
+        "x": 260,
+        "y": 120,
+        "wires": [
+            [
+                "f4c28ace81f430ea",
+                "5aa898b074a66832"
+            ]
+        ]
+    },
+    {
+        "id": "5aa898b074a66832",
+        "type": "debug",
+        "z": "66109da7b04f3737",
+        "name": "vectorURdata",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "71a60435a387355d",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]
