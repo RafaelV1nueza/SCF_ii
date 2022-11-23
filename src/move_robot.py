@@ -209,7 +209,17 @@ class AdjustRobotClass():
             point.pose = pose
             point.time_from_start = rospy.Duration(duration_list[i])
             goal.trajectory.points.append(point)
+        self.ask_confirmation(pose_list)
+        rospy.loginfo(
+            "Executing trajectory using the {}".format(self.cartesian_trajectory_controller)
+        )
+        trajectory_client.send_goal(goal)
+        trajectory_client.wait_for_result()
 
+        result = trajectory_client.get_result()
+
+        rospy.loginfo("Trajectory execution finished in state {}".format(result.error_code))
+        
     def switch_controller(self, target_controller):
         """Activates the desired controller and stops all others from the predefined list above"""
         other_controllers = (

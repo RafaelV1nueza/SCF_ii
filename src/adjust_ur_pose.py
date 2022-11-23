@@ -42,7 +42,7 @@ class AdjustPoseClass():
 
         self.sep_const = 0.2 ##20cm de separacion
         self.pose_flag = 0
-        self.vector_flag  = 0
+        self.vector_flag = 0
 
         ###********** INIT NODE **********### 
         r = rospy.Rate(0.2) #1Hz 
