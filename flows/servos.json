@@ -1,0 +1,182 @@
+[
+    {
+        "id": "cc8a236cf25a3899",
+        "type": "tab",
+        "label": "Servos",
+        "disabled": true,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "18fbfad0732e6941",
+        "type": "ubidots_in",
+        "z": "cc8a236cf25a3899",
+        "tier": "business",
+        "name": "Ubidots in",
+        "token": "BBFF-OAOGGUeIkxWZil1kkbjj05A1rlLDhF",
+        "device_label": "retosteve",
+        "tls_checkbox_in": true,
+        "custom_topic_checkbox": true,
+        "label_variable_1": "retosteve/servozoom",
+        "label_variable_2": "",
+        "label_variable_3": "",
+        "label_variable_4": "",
+        "label_variable_5": "",
+        "label_variable_6": "",
+        "label_variable_7": "",
+        "label_variable_8": "",
+        "label_variable_9": "",
+        "label_variable_10": "",
+        "checkbox_variable_1_last_value": true,
+        "checkbox_variable_2_last_value": true,
+        "checkbox_variable_3_last_value": true,
+        "checkbox_variable_4_last_value": true,
+        "checkbox_variable_5_last_value": true,
+        "checkbox_variable_6_last_value": true,
+        "checkbox_variable_7_last_value": true,
+        "checkbox_variable_8_last_value": true,
+        "checkbox_variable_9_last_value": true,
+        "checkbox_variable_10_last_value": true,
+        "x": 220,
+        "y": 120,
+        "wires": [
+            [
+                "023dee9b4ed1e21f"
+            ]
+        ]
+    },
+    {
+        "id": "9669ae29783067f6",
+        "type": "ros-publisher",
+        "z": "cc8a236cf25a3899",
+        "topicname": "/zoomS",
+        "typepackage": "std_msgs",
+        "typename": "Int64",
+        "x": 640,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "023dee9b4ed1e21f",
+        "type": "function",
+        "z": "cc8a236cf25a3899",
+        "name": "function 4",
+        "func": "var servoVal = {}\nvar a = msg.payload[\"retosteve/servozoom\"].value\nservoVal.payload = { \"data\": a }\nreturn servoVal;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 120,
+        "wires": [
+            [
+                "9669ae29783067f6",
+                "3f140e6240840c66"
+            ]
+        ]
+    },
+    {
+        "id": "3f140e6240840c66",
+        "type": "debug",
+        "z": "cc8a236cf25a3899",
+        "name": "SevoZoom",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "4b8e81bdef96547c",
+        "type": "ubidots_in",
+        "z": "cc8a236cf25a3899",
+        "tier": "business",
+        "name": "Ubidots in",
+        "token": "BBFF-OAOGGUeIkxWZil1kkbjj05A1rlLDhF",
+        "device_label": "retosteve",
+        "tls_checkbox_in": true,
+        "custom_topic_checkbox": true,
+        "label_variable_1": "retosteve/servofocus",
+        "label_variable_2": "",
+        "label_variable_3": "",
+        "label_variable_4": "",
+        "label_variable_5": "",
+        "label_variable_6": "",
+        "label_variable_7": "",
+        "label_variable_8": "",
+        "label_variable_9": "",
+        "label_variable_10": "",
+        "checkbox_variable_1_last_value": true,
+        "checkbox_variable_2_last_value": true,
+        "checkbox_variable_3_last_value": true,
+        "checkbox_variable_4_last_value": true,
+        "checkbox_variable_5_last_value": true,
+        "checkbox_variable_6_last_value": true,
+        "checkbox_variable_7_last_value": true,
+        "checkbox_variable_8_last_value": true,
+        "checkbox_variable_9_last_value": true,
+        "checkbox_variable_10_last_value": true,
+        "x": 220,
+        "y": 300,
+        "wires": [
+            [
+                "1b6034efae496797"
+            ]
+        ]
+    },
+    {
+        "id": "455fcee7130a5068",
+        "type": "ros-publisher",
+        "z": "cc8a236cf25a3899",
+        "topicname": "/focusS",
+        "typepackage": "std_msgs",
+        "typename": "Int64",
+        "x": 640,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "1b6034efae496797",
+        "type": "function",
+        "z": "cc8a236cf25a3899",
+        "name": "function 5",
+        "func": "var servoVal = {}\nvar a = msg.payload[\"retosteve/servofocus\"].value\nservoVal.payload = { \"data\": a }\nreturn servoVal;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 300,
+        "wires": [
+            [
+                "455fcee7130a5068",
+                "9c57e6d40691a030"
+            ]
+        ]
+    },
+    {
+        "id": "9c57e6d40691a030",
+        "type": "debug",
+        "z": "cc8a236cf25a3899",
+        "name": "SevoFocus",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 360,
+        "wires": []
+    }
+]
