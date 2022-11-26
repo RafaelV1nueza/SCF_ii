@@ -10,19 +10,18 @@
 #                                                                       #
 #########################################################################
 #                                                                       #
-# File Name: cam_vec_tran.py                                            #
+# File Name: quat_cam.py                                                #
 #                                                                       #
-# Maintainer:vinu,valeria                                               #
+# Maintainer:vinu,                                                      #
 #                                                                       #
 # Version: v1.0.2 (alpha)                                               #
 #                                                                       #
-# Notes: Recieves a quaternion from a topic and inverts x and z axes,   #
-#        Efective 180 degree rotation y axis from orientation ref. :)   #
+# Notes: my sanity is gone                                              #
 #                                                                       #
 #                                                                       #
 # Latest edit: vinu                                                     #
 #                                                                       #
-# Date: 13.11.2022                                                      #
+# Date: 26.11.2022                                                      #
 #########################################################################
 
 import rospy
@@ -51,13 +50,21 @@ class CamInfoClass():
                 quat = self.from_pose2quat(self.tag)
                 print("Recieved Quaternion:")
                 print(quat)
-                print("Inverted QUaternion:")
-                a = quaternion_multiply(quat,[0, 1, 0, 0])
-                f = quaternion_multiply(a,[0.7071068, 0, 0, 0.7071068])
-                inverted = self.from_quat2pose(f)
-                inverted.position = self.tag.position
-                print(inverted)
-                self.pub_quat.publish(inverted)
+                q1 = []
+                q1[0] = np.sign(quat[0])*quat[3]
+                q1[1] = np.sign(quat[0])*np.sign(quat[1])*quat[1] 
+                q1[2] = np.sign(quat[0])*np.sign(quat[2])*quat[2] 
+                q1[3] = abs(quat[0])
+
+
+                
+                #print("Inverted QUaternion:")
+                #a = quaternion_multiply(quat,[0, 1, 0, 0])
+                #f = quaternion_multiply(a,[0.7071068, 0, 0, 0.7071068])
+                rotation = self.from_quat2pose(q1)
+                rotation.position = self.tag.position
+                print(rotation)
+                self.pub_quat.publish(rotation)
             r.sleep()  #It is very important that the r.sleep function is called at least once every cycle. 
     def from_pose2quat(self,pose_data):
         """"Returns a quaternion as a vector from a Pose message"""
