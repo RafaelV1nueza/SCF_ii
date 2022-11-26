@@ -27,6 +27,7 @@
 import rospy
 from geometry_msgs.msg import Pose
 from geometry_msgs.msg import PoseStamped
+from std_msgs.msg import Int8
 from tf.transformations import quaternion_multiply
 import numpy as np 
 
@@ -37,7 +38,7 @@ class CamInfoClass():
 
         self.pub_quat = rospy.Publisher('vector_UR', Pose, queue_size=1)
         rospy.Subscriber("visp_auto_tracker/object_position", PoseStamped, self.cam_vector)
-        rospy.Subscriber("visp_auto_tracker/status", PoseStamped, self.tag_status)
+        rospy.Subscriber("visp_auto_tracker/status", Int8, self.tag_status)
 
         self.tag = Pose()
         self.image_flag  = 0
@@ -47,12 +48,13 @@ class CamInfoClass():
         print("Node initialized 2hz")
         while not rospy.is_shutdown(): 
             print('Rotation tf')
+            print("Recieved Status:")
+            print(self.status_im)
             if self.image_flag  and self.status_im != 1 and self.status_im != 0:
                 quat = self.from_pose2quat(self.tag)
                 print("Recieved Quaternion:")
                 print(quat)
-                print("Recieved Status:")
-                print(self.status_im)
+                
                 
                 q1 = [0,0,0,0]
                 q1[0] = np.sign(quat[0])*quat[3]
