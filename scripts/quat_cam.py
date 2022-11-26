@@ -47,7 +47,7 @@ class CamInfoClass():
         print("Node initialized 2hz")
         while not rospy.is_shutdown(): 
             print('Rotation tf')
-            if self.image_flag  and self.status_im != 1:
+            if self.image_flag  and self.status_im != 1 and self.status_im != 0:
                 quat = self.from_pose2quat(self.tag)
                 print("Recieved Quaternion:")
                 print(quat)
