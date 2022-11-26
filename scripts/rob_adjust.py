@@ -87,7 +87,7 @@ class AdjustPoseClass():
         rospy.loginfo("Action lib client")
         goal = FollowCartesianTrajectoryGoal() #Create empty goal
         trajectory_client = actionlib.SimpleActionClient(
-            "{}/follow_cartesian_trajectory".format(self.cartesian_trajectory_controller),
+            "{}/follow_cartesian_trajectory".format(self.carte_traj_controller),
             FollowCartesianTrajectoryAction,
         )
         # Wait for action server to be ready
@@ -109,7 +109,7 @@ class AdjustPoseClass():
 
         ###********** INIT NODE **********### 
         r = rospy.Rate(0.2) #1Hz 
-        print("Node initialized 0.2hz")
+        rospy.loginfo("Node initialized 0.2hz")
         while not rospy.is_shutdown(): 
             print('While loop')
             if self.vector_flag and self.pose_flag:
@@ -125,7 +125,7 @@ class AdjustPoseClass():
                 print("W: ",str(self.robot_pose.orientation.w)," to ",str(poseR[3])) 
                 user_input = input("Mover el robot a la pose nueva? Y/N: ")
                 if user_input in ['Yes', 'Y', 'y', 'si', 'Si', 'yes', 'YES', 'SI', 'sipis','sip']:
-                    print('OK moviendo...')
+                    rospy.loginfo('OK moviendo...')
                     goal = FollowCartesianTrajectoryGoal() #Create empty goal
                     pose_list = [
                         geometry_msgs.Pose(
@@ -141,15 +141,16 @@ class AdjustPoseClass():
 
                     self.ask_confirmation(pose_list)
                     rospy.loginfo(
-                        "Executing trajectory using the {}".format(self.cartesian_trajectory_controller)
+                        "Executing trajectory using the {}".format(self.carte_traj_controller)
                     )
                     trajectory_client.send_goal(goal)
+                    rospy.loginfo("Goal Sent. Waiting for results")
                     trajectory_client.wait_for_result()
 
                     result = trajectory_client.get_result()
 
                     rospy.loginfo("Trajectory execution finished in state {}".format(result.error_code))
-
+                    trajectory_client.cancel_all_goals()
                     print('Successful..')
 
                 elif user_input in ['N','n','NO','no','No','Nope','nopis']:
@@ -157,6 +158,8 @@ class AdjustPoseClass():
                     self.vector_flag = 0
                     self.pose_flag = 0
                     goal = FollowCartesianTrajectoryGoal()
+                    trajectory_client.cancel_all_goals()
+
 
                 else:
                     print('Unselected & Waiting for new data poses')
