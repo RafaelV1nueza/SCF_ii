@@ -41,7 +41,7 @@ class CamInfoClass():
 
         self.tag = Pose()
         self.image_flag  = 0
-
+        self.status_im = 0
         #********** INIT NODE **********### 
         r = rospy.Rate(2) #1Hz 
         print("Node initialized 2hz")
