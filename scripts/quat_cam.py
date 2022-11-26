@@ -37,6 +37,7 @@ class CamInfoClass():
 
         self.pub_quat = rospy.Publisher('vector_UR', Pose, queue_size=1)
         rospy.Subscriber("visp_auto_tracker/object_position", PoseStamped, self.cam_vector)
+        rospy.Subscriber("visp_auto_tracker/status", PoseStamped, self.tag_status)
 
         self.tag = Pose()
         self.image_flag  = 0
@@ -46,10 +47,13 @@ class CamInfoClass():
         print("Node initialized 2hz")
         while not rospy.is_shutdown(): 
             print('Rotation tf')
-            if self.image_flag:
+            if self.image_flag  and self.status_im != 1:
                 quat = self.from_pose2quat(self.tag)
                 print("Recieved Quaternion:")
                 print(quat)
+                print("Recieved Status:")
+                print(self.status_im)
+                
                 q1 = [0,0,0,0]
                 q1[0] = np.sign(quat[0])*quat[3]
                 q1[1] = np.sign(quat[0])*np.sign(quat[1])*quat[1] 
@@ -87,6 +91,10 @@ class CamInfoClass():
         self.tag = tag_vector.pose
         print('Recieved Vector Pose')
         self.image_flag = 1
+
+    def tag_status(self,msg):
+        """Recieves status"""
+        self.status_im = msg.data
 
     def cleanup(self): 
         #This function is called just before finishing the node 
