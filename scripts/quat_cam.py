@@ -50,7 +50,7 @@ class CamInfoClass():
                 quat = self.from_pose2quat(self.tag)
                 print("Recieved Quaternion:")
                 print(quat)
-                q1 = []
+                q1 = [0,0,0,0]
                 q1[0] = np.sign(quat[0])*quat[3]
                 q1[1] = np.sign(quat[0])*np.sign(quat[1])*quat[1] 
                 q1[2] = np.sign(quat[0])*np.sign(quat[2])*quat[2] 

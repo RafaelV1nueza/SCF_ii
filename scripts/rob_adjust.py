@@ -27,13 +27,38 @@
 
 import rospy
 import time
+import actionlib
+
 from geometry_msgs.msg import Pose
 from collabROB_brain import TrajectoryClient
+
+#All controllers to stop conflicting
+CARTESIAN_TRAJECTORY_CONTROLLERS = [
+    "pose_based_cartesian_traj_controller",
+    "joint_based_cartesian_traj_controller",
+    "forward_cartesian_traj_controller",
+]
+JOINT_TRAJECTORY_CONTROLLERS = [
+    "scaled_pos_joint_traj_controller",
+    "scaled_vel_joint_traj_controller",
+    "pos_joint_traj_controller",
+    "vel_joint_traj_controller",
+    "forward_joint_traj_controller",
+]
+CONFLICTING_CONTROLLERS = ["joint_group_vel_controller", "twist_controller"]
+
 
 class AdjustPoseClass():
     """Class to Adjust Ur Position reading from pose and rotation topic"""
     def __init__(self): 
         rospy.on_shutdown(self.cleanup) 
+
+        #Select Controller
+
+
+        #Action lib Client
+
+
         rospy.Subscriber("vector_UR", Pose, self.vector_ur_cb)
         rospy.Subscriber("pose_UR", Pose, self.pose_ur_cb)
         
