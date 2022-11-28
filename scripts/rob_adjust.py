@@ -80,22 +80,10 @@ class AdjustPoseClass():
 
         #Select/Switch Controller
         rospy.loginfo("Select/switch controller")
-        self.carte_traj_controller = CARTESIAN_TRAJECTORY_CONTROLLERS[1] #Controlador 6 aqui se cambia
+        self.carte_traj_controller = CARTESIAN_TRAJECTORY_CONTROLLERS[0] #Controlador 5 aqui se cambia
         self.switch_controller(self.carte_traj_controller) 
 
-        #Action lib Client
-        rospy.loginfo("Action lib client")
-        goal = FollowCartesianTrajectoryGoal() #Create empty goal
-        trajectory_client = actionlib.SimpleActionClient(
-            "{}/follow_cartesian_trajectory".format(self.carte_traj_controller),
-            FollowCartesianTrajectoryAction,
-        )
-        # Wait for action server to be ready
-        rospy.loginfo("Waiting for action server to be ready...")
-        timeout = rospy.Duration(5)
-        if not trajectory_client.wait_for_server(timeout):
-            rospy.logerr("Could not reach controller action server.")
-            sys.exit(-1)
+        
 
         #Subscriber
         rospy.loginfo("Starting subscribers")
@@ -126,7 +114,21 @@ class AdjustPoseClass():
                 user_input = input("Mover el robot a la pose nueva? Y/N: ")
                 if user_input in ['Yes', 'Y', 'y', 'si', 'Si', 'yes', 'YES', 'SI', 'sipis','sip']:
                     rospy.loginfo('OK moviendo...')
+                    
+                    #Action lib Client
+                    rospy.loginfo("Action lib client")
                     goal = FollowCartesianTrajectoryGoal() #Create empty goal
+                    trajectory_client = actionlib.SimpleActionClient(
+                        "{}/follow_cartesian_trajectory".format(self.carte_traj_controller),
+                        FollowCartesianTrajectoryAction,
+                    )
+                    # Wait for action server to be ready
+                    rospy.loginfo("Waiting for action server to be ready...")
+                    timeout = rospy.Duration(5)
+                    if not trajectory_client.wait_for_server(timeout):
+                        rospy.logerr("Could not reach controller action server.")
+                        sys.exit(-1)
+
                     pose_list = [
                         geometry_msgs.Pose(
                             geometry_msgs.Vector3(poseP[0], poseP[1], poseP[2]), geometry_msgs.Quaternion(poseR[0], poseR[1], poseR[2], poseR[3])
@@ -145,6 +147,7 @@ class AdjustPoseClass():
                     )
                     trajectory_client.send_goal(goal)
                     rospy.loginfo("Goal Sent. Waiting for results")
+                    time.sleep(5)
                     trajectory_client.wait_for_result()
 
                     result = trajectory_client.get_result()
@@ -257,6 +260,6 @@ class AdjustPoseClass():
 
 if __name__ == "__main__": 
 
-    rospy.init_node("adjust_pose_node", anonymous=True) 
+    rospy.init_node("adjust_pose_node", anonymous=False) 
     
     AdjustPoseClass()

@@ -57,9 +57,9 @@ class CamInfoClass():
                 
                 
                 q1 = [0,0,0,0]
-                q1[0] = np.sign(quat[0])*quat[3]
-                q1[1] = np.sign(quat[0])*np.sign(quat[1])*quat[1] 
-                q1[2] = np.sign(quat[0])*np.sign(quat[2])*quat[2] 
+                q1[0] = -1*np.sign(quat[0])*quat[3]
+                q1[1] = -1*np.sign(quat[0])*np.sign(quat[1])*quat[1] 
+                q1[2] = -1*np.sign(quat[0])*np.sign(quat[2])*quat[2] 
                 q1[3] = abs(quat[0])
 
 
